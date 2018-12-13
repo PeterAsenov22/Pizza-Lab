@@ -14,6 +14,7 @@
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.IdentityModel.Tokens;
+    using Middlewares.Extensions;
     using System.Text;
 
     public class Startup
@@ -95,6 +96,7 @@
                 .AllowAnyHeader()
                 .AllowCredentials());
 
+            app.UseSeedAdminMiddleware();
             app.UseHttpsRedirection();
             app.UseAuthentication(); 
             app.UseMvc();
