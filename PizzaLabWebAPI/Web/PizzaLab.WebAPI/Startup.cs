@@ -2,6 +2,7 @@
 {
     using AutoMapper;
     using Data;
+    using Data.Common;
     using Data.Models;
     using Helpers;
     using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -72,7 +73,9 @@
                 .AddDefaultTokenProviders();
 
             services.AddCors();
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);         
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+
+            services.AddScoped(typeof(IRepository<>), typeof(EfRepository<>));
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
