@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.2</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Data\PizzaLab.Data.Common\PizzaLab.Data.Common.csproj" />
+    <ProjectReference Include="..\..\Data\PizzaLab.Data.Models\PizzaLab.Data.Models.csproj" />
+    <ProjectReference Include="..\..\Web\PizzaLab.WebAPI\PizzaLab.WebAPI.csproj" />
+  </ItemGroup>
+
+</Project>

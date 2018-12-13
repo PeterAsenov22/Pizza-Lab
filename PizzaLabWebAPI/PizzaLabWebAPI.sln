@@ -7,13 +7,17 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Data", "Data", "{F0E1B5F0-E
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Web", "Web", "{554F97C6-EFB7-47FE-9C00-F958379B3838}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PizzaLab.WebAPI", "Web\PizzaLab.WebAPI\PizzaLab.WebAPI.csproj", "{D9AD019F-0FB6-48AB-808D-A55CD20DC2FC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PizzaLab.WebAPI", "Web\PizzaLab.WebAPI\PizzaLab.WebAPI.csproj", "{D9AD019F-0FB6-48AB-808D-A55CD20DC2FC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PizzaLab.Data", "Data\PizzaLab.Data\PizzaLab.Data.csproj", "{630D3AA8-C394-4B1E-B469-0671935929E4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PizzaLab.Data", "Data\PizzaLab.Data\PizzaLab.Data.csproj", "{630D3AA8-C394-4B1E-B469-0671935929E4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PizzaLab.Data.Common", "Data\PizzaLab.Data.Common\PizzaLab.Data.Common.csproj", "{5E47E92C-5934-43B2-AE00-5C180EBE6F18}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PizzaLab.Data.Common", "Data\PizzaLab.Data.Common\PizzaLab.Data.Common.csproj", "{5E47E92C-5934-43B2-AE00-5C180EBE6F18}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PizzaLab.Data.Models", "Data\PizzaLab.Data.Models\PizzaLab.Data.Models.csproj", "{5BFEAA75-FE98-4354-89A2-1EE96D31EB03}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PizzaLab.Data.Models", "Data\PizzaLab.Data.Models\PizzaLab.Data.Models.csproj", "{5BFEAA75-FE98-4354-89A2-1EE96D31EB03}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{D60DDC0C-5D1C-487A-B625-5683F6337854}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PizzaLab.Services.DataServices", "Services\PizzaLab.Services.DataServices\PizzaLab.Services.DataServices.csproj", "{3F354455-F9B6-457F-8671-303054F07878}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -37,6 +41,10 @@ Global
 		{5BFEAA75-FE98-4354-89A2-1EE96D31EB03}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5BFEAA75-FE98-4354-89A2-1EE96D31EB03}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5BFEAA75-FE98-4354-89A2-1EE96D31EB03}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3F354455-F9B6-457F-8671-303054F07878}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3F354455-F9B6-457F-8671-303054F07878}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3F354455-F9B6-457F-8671-303054F07878}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3F354455-F9B6-457F-8671-303054F07878}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -46,6 +54,7 @@ Global
 		{630D3AA8-C394-4B1E-B469-0671935929E4} = {F0E1B5F0-EC76-4746-B2A0-48203F06EFD5}
 		{5E47E92C-5934-43B2-AE00-5C180EBE6F18} = {F0E1B5F0-EC76-4746-B2A0-48203F06EFD5}
 		{5BFEAA75-FE98-4354-89A2-1EE96D31EB03} = {F0E1B5F0-EC76-4746-B2A0-48203F06EFD5}
+		{3F354455-F9B6-457F-8671-303054F07878} = {D60DDC0C-5D1C-487A-B625-5683F6337854}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {23C48A04-22E6-4027-AADB-27A731F1C31E}

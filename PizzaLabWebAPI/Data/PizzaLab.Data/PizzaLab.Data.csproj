@@ -15,6 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\PizzaLab.Data.Common\PizzaLab.Data.Common.csproj" />
     <ProjectReference Include="..\PizzaLab.Data.Models\PizzaLab.Data.Models.csproj" />
   </ItemGroup>
 
