@@ -80,6 +80,22 @@
         {
             var user = this._mapper.Map<ApplicationUser>(model);
 
+            if (_userManager.Users.Any(u => u.Email == model.Email))
+            {
+                return BadRequest(new BadRequestViewModel
+                {
+                    Message = "This e-mail is already taken. Please try with another one."
+                });
+            }
+
+            if (_userManager.Users.Any(u => u.UserName == model.Username))
+            {
+                return BadRequest(new BadRequestViewModel
+                {
+                    Message = "This username is already taken. Please try with another one."
+                });
+            }
+
             var result = await _userManager.CreateAsync(user, model.Password);
 
             if (result.Succeeded)
