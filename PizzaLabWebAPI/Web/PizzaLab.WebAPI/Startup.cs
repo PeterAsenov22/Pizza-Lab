@@ -1,4 +1,6 @@
-﻿namespace PizzaLab.WebAPI
+﻿using Swashbuckle.AspNetCore.Swagger;
+
+namespace PizzaLab.WebAPI
 {
     using AutoMapper;
     using Data;
@@ -78,6 +80,11 @@
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
             services.AddScoped(typeof(IRepository<>), typeof(EfRepository<>));
+
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new Info { Title = "PizzaLab Web API", Version = "v1" });
+            });
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
@@ -101,6 +108,11 @@
             app.UseHttpsRedirection();
             app.UseAuthentication(); 
             app.UseMvc();
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "PizzaLab API V1");
+            });
         }
     }
 }
