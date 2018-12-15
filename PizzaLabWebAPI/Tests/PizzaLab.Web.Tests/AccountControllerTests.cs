@@ -46,7 +46,7 @@
             response.EnsureSuccessStatusCode();
             Assert.Equal("You have successfully registered.", authObj.Message);
             Assert.NotNull(authObj.Token);
-            Assert.Equal(332, authObj.Token.Length);
+            Assert.Equal(267, authObj.Token.Length);
         }
 
         [Fact]
@@ -165,7 +165,7 @@
             response.EnsureSuccessStatusCode();
             Assert.Equal("You have successfully logged in.", authObj.Message);
             Assert.NotNull(authObj.Token);
-            Assert.Equal(332, authObj.Token.Length);
+            Assert.Equal(267, authObj.Token.Length);
         }
 
         [Theory]

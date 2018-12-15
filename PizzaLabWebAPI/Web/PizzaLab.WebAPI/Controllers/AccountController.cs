@@ -123,9 +123,8 @@
             {
                 Subject = new ClaimsIdentity(new Claim[]
                 {
-                    new Claim(JwtRegisteredClaimNames.Email, email),
                     new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-                    new Claim(JwtRegisteredClaimNames.NameId, user.Id),
+                    new Claim(ClaimTypes.Name, user.UserName),                 
                     new Claim("isAdmin", this._userManager.IsInRoleAsync(user, "Administrator").GetAwaiter().GetResult().ToString())
                 }),
                 Expires = DateTime.UtcNow.AddDays(7),

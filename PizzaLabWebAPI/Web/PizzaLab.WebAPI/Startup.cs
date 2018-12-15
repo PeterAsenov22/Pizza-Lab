@@ -1,6 +1,4 @@
-﻿using Swashbuckle.AspNetCore.Swagger;
-
-namespace PizzaLab.WebAPI
+﻿namespace PizzaLab.WebAPI
 {
     using AutoMapper;
     using Data;
@@ -17,6 +15,7 @@ namespace PizzaLab.WebAPI
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.IdentityModel.Tokens;
     using Middlewares.Extensions;
+    using Swashbuckle.AspNetCore.Swagger;
     using System.Text;
 
     public class Startup
