@@ -8,5 +8,7 @@
     {
         public PizzaLabDbContext(DbContextOptions<PizzaLabDbContext> options)
             : base(options) { }
+
+        public DbSet<Log> Logs { get; set; }
     }
 }

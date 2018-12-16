@@ -5,6 +5,7 @@
     using Data.Common;
     using Data.Models;
     using Helpers;
+    using Helpers.Logging;
     using Microsoft.AspNetCore.Authentication.JwtBearer;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
@@ -13,6 +14,7 @@
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
+    using Microsoft.Extensions.Logging;
     using Microsoft.IdentityModel.Tokens;
     using Middlewares.Extensions;
     using Swashbuckle.AspNetCore.Swagger;
@@ -86,7 +88,7 @@
             });
         }
 
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
             if (env.IsDevelopment())
             {
@@ -96,6 +98,8 @@
             {
                 app.UseHsts();
             }
+
+            loggerFactory.AddContext(LogLevel.Warning, app);
 
             app.UseCors(x => x
                 .AllowAnyOrigin()
