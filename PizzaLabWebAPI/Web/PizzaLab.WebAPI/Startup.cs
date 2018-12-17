@@ -99,7 +99,7 @@
                 app.UseHsts();
             }
 
-            loggerFactory.AddContext(LogLevel.Warning, app);
+            loggerFactory.AddContext(LogLevel.Error, app);
 
             app.UseCors(x => x
                 .AllowAnyOrigin()
