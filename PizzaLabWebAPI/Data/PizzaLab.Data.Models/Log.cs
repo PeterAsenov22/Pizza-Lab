@@ -1,11 +1,10 @@
 ﻿namespace PizzaLab.Data.Models
 {
+    using Common;
     using System;
 
-    public class Log
+    public class Log : BaseModel<int>
     {
-        public int Id { get; set; }
-
         public int EventId { get; set; }
 
         public string EventName { get; set; }
