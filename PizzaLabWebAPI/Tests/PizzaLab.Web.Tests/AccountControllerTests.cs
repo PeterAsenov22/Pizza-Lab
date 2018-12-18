@@ -46,7 +46,7 @@
             response.EnsureSuccessStatusCode();
             Assert.Equal("You have successfully registered.", authObj.Message);
             Assert.NotNull(authObj.Token);
-            Assert.Equal(267, authObj.Token.Length);
+            Assert.Equal(261, authObj.Token.Length);
         }
 
         [Fact]
@@ -107,8 +107,6 @@
         [InlineData("vankata", "vankata", "Ivan", "Nenov", "12345678")]
         [InlineData(null, "vankata", "Ivan", "Nenov", "12345678")]
         [InlineData("vankata@abv.bg", "va", "Ivan", "Nenov", "12345678")]
-        [InlineData("vankata@abv.bg", "vankata", "I", "Nenov", "12345678")]
-        [InlineData("vankata@abv.bg", "vankata", "Ivan", "N", "12345678")]
         [InlineData("vankata@abv.bg", "vankata", "Ivan", "Nenov", "1234567")]
         public async Task RegisterMethodShouldFailWithInvalidParameter(
             string email,
@@ -165,7 +163,33 @@
             response.EnsureSuccessStatusCode();
             Assert.Equal("You have successfully logged in.", authObj.Message);
             Assert.NotNull(authObj.Token);
-            Assert.Equal(267, authObj.Token.Length);
+            Assert.Equal(261, authObj.Token.Length);
+        }
+
+        [Fact]
+        public async Task LoginMethodShouldLoginAdminUserSuccessfully()
+        {
+            var client = this.factory.CreateClient();
+            var loginInputModel = new LoginInputModel
+            {
+                Email = "admin@admin.com",
+                Password = "12345678"
+            };
+
+            var stringContent = new StringContent(
+                JsonConvert.SerializeObject(loginInputModel),
+                Encoding.UTF8,
+                "application/json");
+
+            var response = await client.PostAsync("/api/account/login", stringContent);
+
+            var content = await response.Content.ReadAsStringAsync();
+            var authObj = JsonConvert.DeserializeObject<AuthenticationViewModel>(content);
+
+            response.EnsureSuccessStatusCode();
+            Assert.Equal("You have successfully logged in.", authObj.Message);
+            Assert.NotNull(authObj.Token);
+            Assert.Equal(271, authObj.Token.Length);
         }
 
         [Theory]
