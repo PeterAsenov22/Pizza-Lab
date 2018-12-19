@@ -12,6 +12,7 @@
         public string Email { get; set; }
 
         [Required]
+        [RegularExpression("^[^@]*$", ErrorMessage = "Username should not contain @ symbol.")]
         [MinLength(UsernameMinLength, ErrorMessage = "Username should be at least 4 symbols long.")]
         public string Username { get; set; }
 

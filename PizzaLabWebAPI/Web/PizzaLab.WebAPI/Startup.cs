@@ -39,6 +39,9 @@
 
             services.AddAutoMapper();
 
+            var facebookSettingsSection = Configuration.GetSection("FacebookSettings");
+            services.Configure<FacebookSettings>(facebookSettingsSection);
+
             var jwtSettingsSection = Configuration.GetSection("JwtSettings");
             services.Configure<JwtSettings>(jwtSettingsSection);
 

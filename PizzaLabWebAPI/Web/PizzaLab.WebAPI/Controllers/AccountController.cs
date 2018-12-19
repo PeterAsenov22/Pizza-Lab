@@ -9,12 +9,15 @@
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.Options;
     using Microsoft.IdentityModel.Tokens;
+    using Models.Account.FacebookModels;
     using Models.Account.InputModels;
     using Models.Account.ViewModels;
     using Models.Common;
+    using Newtonsoft.Json;
     using System;
     using System.IdentityModel.Tokens.Jwt;
     using System.Linq;
+    using System.Net.Http;
     using System.Security.Claims;
     using System.Text;
     using System.Threading.Tasks;
@@ -25,19 +28,24 @@
     {
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly UserManager<ApplicationUser> _userManager;
+        private readonly FacebookSettings _facebookSettings;
         private readonly JwtSettings _jwtSettings;
         private readonly IMapper _mapper;
+        private readonly HttpClient _client;
  
         public AccountController(
             SignInManager<ApplicationUser> signInManager,
             UserManager<ApplicationUser> userManager,
+            IOptions<FacebookSettings> facebookSettings,
             IOptions<JwtSettings> jwtSettings,
             IMapper mapper)
         {
             this._signInManager = signInManager;
             this._userManager = userManager;
+            this._facebookSettings = facebookSettings.Value;
             this._jwtSettings = jwtSettings.Value;
             this._mapper = mapper;
+            this._client = new HttpClient();
         }
 
         [HttpPost]
@@ -62,7 +70,7 @@
                 return new AuthenticationViewModel
                 {
                     Message = "You have successfully logged in.",
-                    Token = GenerateJwtToken(model.Email, user)
+                    Token = GenerateJwtToken(user)
                 };
             }
 
@@ -105,7 +113,7 @@
                 return new AuthenticationViewModel
                 {
                     Message = "You have successfully registered.",
-                    Token = GenerateJwtToken(model.Email, user)
+                    Token = GenerateJwtToken(user)
                 };
             }
 
@@ -115,7 +123,72 @@
             });
         }
 
-        private string GenerateJwtToken(string email, ApplicationUser user)
+        [Route("/api/account/login/external/facebook")]
+        [HttpPost]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesDefaultResponseType]
+        public async Task<object> FacebookLogin([FromBody] FacebookLoginInputModel model)
+        {
+            var appAccessTokenResponse = await _client.GetStringAsync($"https://graph.facebook.com/oauth/access_token?client_id={_facebookSettings.AppId}&client_secret={_facebookSettings.AppSecret}&grant_type=client_credentials");
+
+            var appAccessToken = JsonConvert.DeserializeObject<FacebookAppAccessToken>(appAccessTokenResponse);
+
+            var userAccessTokenValidationResponse = await _client.GetStringAsync($"https://graph.facebook.com/debug_token?input_token={model.AccessToken}&access_token={appAccessToken.AccessToken}");
+            var userAccessTokenValidation = JsonConvert.DeserializeObject<FacebookUserAccessTokenValidation>(userAccessTokenValidationResponse);
+
+            if (!userAccessTokenValidation.Data.IsValid)
+            {
+                throw new Exception("Invalid Facebook Token.");
+            }
+
+            var userInfoResponse = await _client.GetStringAsync($"https://graph.facebook.com/v2.8/me?fields=id,email,first_name,last_name,name,gender,locale,birthday,picture&access_token={model.AccessToken}");
+            var userInfo = JsonConvert.DeserializeObject<FacebookUserData>(userInfoResponse);
+
+            if (userInfo.Email is null)
+            {
+                var userFullName = $"{userInfo.FirstName.ToLower()}{userInfo.LastName.ToLower()}";
+                userInfo.Email = $"{userFullName}@facebook.com";
+                if (!_userManager.Users.Any(u => u.UserName == userFullName))
+                {
+                    userInfo.Username = userFullName;
+                }
+                else
+                {
+                    userInfo.Username = userInfo.Email;
+                }
+            }
+
+            var user = await this._userManager.FindByEmailAsync(userInfo.Email);
+            if (user is null)
+            {
+                user = this._mapper.Map<ApplicationUser>(userInfo);
+                if (_userManager.Users.Any(u => u.Email == user.Email))
+                {
+                    return BadRequest(new BadRequestViewModel
+                    {
+                        Message = "This e-mail is already taken."
+                    });
+                }
+
+                var result = await _userManager.CreateAsync(user);
+                if (!result.Succeeded)
+                {
+                    return BadRequest(new BadRequestViewModel
+                    {
+                        Message = "Something went wrong."
+                    });
+                }
+            }
+
+            return new AuthenticationViewModel
+            {
+                Message = "You have successfully logged in.",
+                Token = GenerateJwtToken(user)
+            };
+        }
+
+        private string GenerateJwtToken(ApplicationUser user)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
             var key = Encoding.ASCII.GetBytes(_jwtSettings.Secret);
