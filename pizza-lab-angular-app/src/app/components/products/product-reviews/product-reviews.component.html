@@ -1,0 +1,38 @@
+<div class="row space-top review-container">
+  <div class="col-md-8">
+    <form [formGroup]="reviewForm" (ngSubmit)="submitForm()">
+      <legend>Leave a review</legend>
+      <div class="form-group">
+        <textarea
+          class="form-control"
+          formControlName="review"
+          [ngClass]="{ 'is-invalid': review.touched && review.errors }">
+        </textarea>
+        <div *ngIf="review.errors" class="invalid-feedback">
+          <div *ngIf="review.errors.required">Review is required!</div>
+          <div *ngIf="review.errors.minlength">Review must be at least 4 characters!</div>
+        </div>
+      </div>
+      <div class="form-group">
+        <input type="submit" class="btn btn-secondary" value="Submit review" [disabled]="!reviewForm.valid" />
+      </div>
+    </form>
+  </div>
+  <div class="col-md-8 review-style" *ngFor="let r of reviews">
+    <div class="card text-black bg-light">
+      <div class="card-body">
+        <blockquote class="card-blockquote">
+          <p class="h6">{{r.reviewText}}</p>
+          <button class="btn btn-danger float-right btn-sm custom-button" *ngIf="authService.isAdmin() || r.creatorUsername === authService.getUsername()"><i class="fa fa-trash"></i></button>
+          <button class="btn btn-warning float-right btn-sm custom-button" *ngIf="authService.isAdmin() || r.creatorUsername === authService.getUsername()"><i class="fa fa-edit"></i></button>
+          <footer class="review-footer">
+            <cite class="text-capitalize footer-color">"{{r.creatorUsername}}"</cite>
+            <span class="review-date footer-color">
+              {{toLocaleString(r.lastModified)}}
+            </span>
+          </footer>
+        </blockquote>
+      </div>
+    </div>
+  </div>
+</div>

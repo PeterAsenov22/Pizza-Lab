@@ -1,0 +1,14 @@
+<div class="container">
+  <div class="jumbotron text-center">
+    <h1 class="display-4" *ngIf="!authService.isAuthenticated()">Welcome to Pizza Lab!</h1>
+    <h1 class="display-4" *ngIf="authService.isAuthenticated()">Welcome to Pizza Lab, {{authService.getUsername()}}!</h1>
+    <hr class="my-4">
+    <p class="lead">Your favourite pizza is now just a few clicks away. Register now and choose from our decent menu.</p>
+    <a class="btn btn-primary btn-lg" routerLink="/menu">Go To Menu</a>
+    <a class="btn btn-secondary btn-lg custom-button" *ngIf="!authService.isAuthenticated()" (click)="openRegisterModal()">Register</a>
+    <a class="btn btn-secondary btn-lg" *ngIf="authService.isAdmin()" routerLink="/admin/orders/pending">View Pending Orders</a>
+    <a class="btn btn-secondary btn-lg" *ngIf="authService.isAuthenticated() && !authService.isAdmin()" routerLink="/orders/my">View Your Orders</a>
+  </div>
+  <h2 class="font-italic text-muted text-center">Top Rated</h2>
+  <app-product-list [products]="products"></app-product-list>
+</div>

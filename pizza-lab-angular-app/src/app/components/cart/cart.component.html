@@ -1,0 +1,49 @@
+<div class="container">
+  <table id="cart" class="table table-hover table-condensed">
+    <thead>
+      <tr>
+        <th style="width: 50px;">Product</th>
+        <th style="width: 10px;">Price</th>
+        <th style="width: 8px;">Quantity</th>
+        <th style="width: 22px;" class="text-center">Subtotal</th>
+        <th style="width: 10px;"></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr [@products] *ngFor="let pr of products; trackBy: trackByIds">
+       <td data-th="Product">
+          <div class="row">
+            <div class="col-sm-4 hidden-xs"><img src="{{pr.image}}" alt="..." class="cart-image" /></div>
+            <div class="col-sm-8">
+              <h4 class="nomargin">{{pr.name}}</h4>
+              <p>{{pr.ingredients.join(', ')}}</p>
+            </div>
+          </div>
+        </td>
+        <td data-th="Price">{{pr.price.toFixed(2)}}</td>
+        <td data-th="Quantity">
+          <input
+            type="number"
+            min="1"
+            name="quantity"
+            class="form-control text-center"
+            (change)="onQuantChange($event, pr._id)"
+            value="{{pr.quantity}}" />
+        </td>
+        <td data-th="Subtotal" class="text-center">{{(pr.price * pr.quantity).toFixed(2)}}</td>
+        <td class="actions" data-th="">
+          <button class="btn btn-info btn-sm custom-button" (click)="onRefreshButtonClick(pr._id)"><i class="fa fa-refresh"></i></button>
+          <button class="btn btn-danger btn-sm" (click)="onDeleteButtonClick(pr._id)"><i class="fa fa-trash-o"></i></button>
+        </td>
+      </tr>
+    </tbody>
+    <tfoot>
+      <tr>
+        <td><a routerLink="/menu" class="btn btn-warning"><i class="fa fa-angle-left"></i> Continue Shopping</a></td>
+        <td colSpan="2" class="hidden-xs"></td>
+        <td class="hidden-xs text-center"><strong>Total {{totalSum.toFixed(2)}}</strong></td>
+        <td *ngIf="products.length > 0"><button class="btn btn-success btn-block" (click)="onCheckoutButtonClick()">Checkout <i class="fa fa-angle-right"></i></button></td>
+      </tr>
+    </tfoot>
+  </table>
+</div>

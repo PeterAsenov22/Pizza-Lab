@@ -1,0 +1,131 @@
+<div class="container">
+  <div class="row space-top">
+    <div class="col-md-12">
+      <h1 class="title">Create New Pizza</h1>
+    </div>
+  </div>
+  <form [formGroup]="createForm" (ngSubmit)="create()">
+    <div class="row space-top">
+      <div class="col-md-6">
+        <div class="form-group">
+          <label class="form-control-label" for="name">Name</label>
+          <input
+            type="text"
+            class="form-control" 
+            id="name" 
+            formControlName="name"
+            [ngClass]="{ 'is-invalid': name.touched && name.errors }" />
+          <div *ngIf="name.errors" class="invalid-feedback">
+            <div *ngIf="name.errors.required">
+              Name is required.
+            </div>
+            <div *ngIf="name.errors.minlength">
+              Name must be at least 3 characters long.
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-control-label" for="ingredients">Ingredients</label>
+          <input
+            type="text"
+            class="form-control" 
+            id="ingredients" 
+            formControlName="ingredients"
+            [ngClass]="{ 'is-invalid': ingredients.touched && ingredients.errors }" />
+          <div *ngIf="ingredients.errors" class="invalid-feedback">
+            <div *ngIf="ingredients.errors.required">
+              Ingredients are required.
+            </div>
+            <div *ngIf="ingredients.errors.minlength">
+              Ingredients must be at least 3 characters long.
+            </div>
+            <div *ngIf="ingredients.errors.spaceAfterComma">
+              There should not be empty space after comma.
+            </div>
+            <div *ngIf="ingredients.errors.commaAtTheEnd">
+              There should not be comma at the end.
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" for="description">Description</label>
+            <input
+              type="text"
+              class="form-control" 
+              id="description" 
+              formControlName="description"
+              [ngClass]="{ 'is-invalid': description.touched && description.errors }" />
+            <div *ngIf="description.errors" class="invalid-feedback">
+              <div *ngIf="description.errors.required">
+                Description is required.
+              </div>
+              <div *ngIf="description.errors.minlength">
+                Description must be at least 10 characters long.
+              </div>
+              <div *ngIf="description.errors.maxlength">
+                Description should not be more than 200 characters long.
+              </div>
+            </div>
+        </div>
+        <div class="form-group">
+          <label class="form-control-label" for="image">Image URL</label>
+          <input
+            type="text"
+            class="form-control" 
+            id="image" 
+            formControlName="image"
+            [ngClass]="{ 'is-invalid': image.touched && image.errors }" />
+          <div *ngIf="image.errors" class="invalid-feedback">
+            <div *ngIf="image.errors.required">
+              Image URL is required.
+            </div>
+            <div *ngIf="image.errors.minlength">
+              Image URL must be at least 14 characters long.
+            </div>
+            <div *ngIf="image.errors.pattern">
+              Image URL must be a valid URL address.
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-control-label" for="weight">Weight</label>
+          <input
+            type="number"
+            class="form-control" 
+            id="weight" 
+            formControlName="weight"
+            [ngClass]="{ 'is-invalid': weight.touched && weight.errors }" />
+          <div *ngIf="weight.errors" class="invalid-feedback">
+            <div *ngIf="weight.errors.required">
+              Weight is required.
+            </div>
+            <div *ngIf="weight.errors.min">
+              Weight must be at least 250 gr.
+            </div>
+            <div *ngIf="weight.errors.max">
+              Weight should not be more than 800 gr.
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-control-label" for="price">Price</label>
+          <input
+            type="number"
+            class="form-control" 
+            id="price" 
+            formControlName="price"
+            [ngClass]="{ 'is-invalid': price.touched && price.errors }" />
+          <div *ngIf="price.errors" class="invalid-feedback">
+            <div *ngIf="price.errors.required">
+              Price is required.
+            </div>
+            <div *ngIf="price.errors.min">
+              Price must be a positive number.
+            </div>
+          </div>
+        </div>
+        <input type="submit" class="btn btn-warning" value="Create" [disabled]="createForm.invalid" />
+      </div>
+    </div>
+  </form>
+</div>

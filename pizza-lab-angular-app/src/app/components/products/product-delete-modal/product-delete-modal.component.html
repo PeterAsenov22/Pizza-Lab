@@ -1,0 +1,17 @@
+<div class="modal-header header">
+  <h4 class="modal-title title">Delete Product</h4>
+  <fa-icon class="close" (click)="activeModal.dismiss('Cross click')" [icon]="faWindowClose"></fa-icon>
+</div>
+
+<div class="modal-content">
+    <div class="modal-header">				
+      <h4 class="modal-title">Are you sure?</h4>	
+    </div>
+    <div class="modal-body">
+      <p>Do you really want to delete this product? This process cannot be undone.</p>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-info" data-dismiss="modal" (click)="activeModal.dismiss('Cross click')">Cancel</button>
+      <button type="button" class="btn btn-danger" (click)="delete()">Delete</button>
+    </div>
+</div>

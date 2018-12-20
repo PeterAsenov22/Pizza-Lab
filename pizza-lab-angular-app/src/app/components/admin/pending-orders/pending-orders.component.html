@@ -1,0 +1,38 @@
+<div class="container" style="padding-top: 25px;" *ngIf="pendingOrders">
+  <h1 class="text-center">Pending Orders</h1>
+  <div class="row" style="padding-top: 25px;">
+    <div class="col-md-12">
+      <div class="box">
+        <div class="table-responsive" style="overflow-x: hidden;">
+          <table class="table table-hover">
+            <thead>
+              <tr>
+                <th>Order</th>
+                <th>Date</th>
+                <th>Total</th>
+                <th>View</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody *ngIf="pendingOrders.length > 0; else notFound">
+              <tr [@pendingOrders] *ngFor="let o of pendingOrders; trackBy: trackByIds; let i = index">
+                <td>{{i + 1 + (currentPage-1)*5}}</td>
+                <td>{{toLocaleString(o.date)}}</td>
+                <td>$ {{getTotalSum(o.products).toFixed(2)}}</td>
+                <td>
+                  <a routerLink="/orders/details/{{o._id}}" class="btn btn-outline-warning btn-sm">View</a>
+                </td>
+                <td>
+                  <a class="btn btn-outline-success btn-sm" (click)="approve(o._id)">Approve</a>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  <ng-template #notFound>
+    <h3 class="text-warning">{{notFoundMessage}}</h3>
+  </ng-template>
+</div>

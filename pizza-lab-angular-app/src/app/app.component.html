@@ -1,0 +1,11 @@
+<app-navigation></app-navigation>
+<ngx-spinner
+  bdColor = "rgba(255,255,255,0.8)"
+  size = "default"
+  color = "#f30606"
+  type = "ball-atom">
+  <p style="font-size: 20px; color: black">Loading...</p>
+</ngx-spinner>
+<router-outlet *ngIf="getCalls === 0"></router-outlet>
+<app-footer></app-footer>
+

@@ -1,0 +1,18 @@
+<div class="container">
+  <div class="row space-top menu">
+    <div class="col-md-12">
+      <h1 class="jumbotron-heading heading">Menu</h1>
+      <form class="form-inline md-form form-sm active-cyan active-cyan-2" (submit)="$event.preventDefault()">
+        <i class="fa fa-search" aria-hidden="true"></i>
+        <input
+          class="form-control form-control-sm ml-3 w-75"
+          type="text"
+          placeholder="Search for the pizza you are looking for..."
+          aria-label="Search"
+          name="query"
+          (keyup)="searchChange($event)" />
+      </form>
+    </div>
+  </div>
+  <app-product-list [products]="productsToView"></app-product-list>
+</div>

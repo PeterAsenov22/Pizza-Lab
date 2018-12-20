@@ -1,0 +1,42 @@
+<div class="bs-component">
+  <nav class="navbar navbar-expand-lg navbar-dark bg-orange">
+    <a class="navbar-brand" routerLink="/home">Pizza Lab</a>
+
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/home">Home
+          <span class="sr-only">(current)</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/menu">Menu</a>
+      </li>
+      <li class="nav-item" *ngIf="authService.isAuthenticated() && !authService.isAdmin()">
+        <a class="nav-link" routerLink="/orders/my">My Orders</a>
+      </li>
+      <li class="nav-item" *ngIf="authService.isAuthenticated() && !authService.isAdmin()">
+        <a class="nav-link" routerLink="/cart">Cart</a>
+      </li>
+      <li class="nav-item" *ngIf="authService.isAuthenticated() && authService.isAdmin()">
+        <a class="nav-link" routerLink="/admin/product/create">Create New Pizza</a>
+      </li>
+      <li class="nav-item" *ngIf="authService.isAuthenticated() && authService.isAdmin()">
+        <a class="nav-link" routerLink="/admin/orders/pending">Pending Orders</a>
+      </li>
+      <li class="nav-item" *ngIf="authService.isAuthenticated() && authService.isAdmin()">
+        <a class="nav-link" routerLink="/admin/orders/approved">Approved Orders</a>
+      </li>
+    </ul>
+    <ul class="nav navbar-nav navbar-right">
+      <li class="nav-item" *ngIf="!authService.isAuthenticated()">
+          <a class="nav-link border-none" (click)="openLoginModal()">Login <fa-icon [icon]="faLogin"></fa-icon></a>
+      </li>
+      <li class="nav-item" *ngIf="!authService.isAuthenticated()">
+        <a class="nav-link border-none" (click)="openRegisterModal()">Register <fa-icon [icon]="faRegister"></fa-icon></a>
+      </li>
+      <li class="nav-item" *ngIf="authService.isAuthenticated()">
+          <a class="nav-link border-none" (click)="logout()">Logout <fa-icon [icon]="faLogout"></fa-icon></a>
+      </li>
+    </ul>
+  </nav>
+</div>

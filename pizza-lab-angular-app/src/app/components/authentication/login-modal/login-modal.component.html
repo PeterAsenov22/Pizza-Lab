@@ -1,0 +1,45 @@
+<div class="modal-header">
+  <h4 class="modal-title">Login</h4>
+  <fa-icon class="close" (click)="activeModal.dismiss('Cross click')" [icon]="faWindowClose"></fa-icon>
+</div>
+<form [formGroup]="loginForm" (ngSubmit)="submitForm()">
+  <div class="modal-boy">
+    <div class="container">
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input 
+          type="text" 
+          class="form-control"
+          formControlName="email"
+          [ngClass]="{ 'is-invalid': email.touched && email.errors }" />
+        <div *ngIf="email.errors" class="invalid-feedback">
+          <div *ngIf="email.errors.required">Email is required!</div>
+          <div *ngIf="email.errors.email">Please enter valid email!</div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input 
+          type="password" 
+          class="form-control" 
+          formControlName="password"
+          [ngClass]="{ 'is-invalid': password.touched && password.errors }" >
+        <div *ngIf="password.errors" class="invalid-feedback">
+          <div *ngIf="password.errors.required">Password is required!</div>
+          <div *ngIf="password.errors.minlength">Password must be at least 8 characters long!</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+        <div style="margin-right: 160px;">
+            <button type="button" class="btn btn-indigo" (click)="loginWithFb()">
+              <i class="fa fa-facebook left"></i> Login with Facebook
+            </button>
+        </div>
+            <button class="btn btn-success"
+            [disabled]="!loginForm.valid">
+              Login
+            </button>
+  </div>
+</form>

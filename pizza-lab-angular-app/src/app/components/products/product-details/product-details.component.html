@@ -1,0 +1,28 @@
+<div class="container details" *ngIf="product">
+  <div class="row space-top">
+    <div class="col-md-12">
+      <h1 class="title">{{product.name}}</h1>
+    </div>
+  </div>
+  <div class="row space-top">
+    <div class="col-md-4">
+      <div class="card text-white bg-primary">
+        <div class="card-body bg-light">
+          <blockquote class="card-blockquote">
+            <img src="{{product.image}}" alt="{{product.name}}" class="card-image" />
+          </blockquote>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <p><span class="light-blue-text">Ingredients</span>: {{product.ingredients.join(", ")}}</p>
+      <p><span class="light-blue-text">Description</span>: {{product.description}}</p>
+      <p><span class="light-blue-text">Weight</span>: {{product.weight}}gr</p>
+      <p><span class="light-blue-text">Price</span>: ${{product.price.toFixed(2)}}</p>
+      <p><span class="light-blue-text">Likes</span>: {{product.likes.length}}</p>
+      <button class="btn btn-primary btn-sm" *ngIf="!product.likes.includes(authService.getUsername())" (click)="onLikeButtonClick()">Like</button>
+      <button class="btn btn-primary btn-sm" *ngIf="product.likes.includes(authService.getUsername())" (click)="onUnlikeButtonClick()">Unlike</button>
+      <button class="btn btn-warning btn-sm" (click)="addToCart()">Order</button>
+    </div>
+  </div>
+</div>

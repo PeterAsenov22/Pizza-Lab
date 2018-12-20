@@ -1,0 +1,58 @@
+<div class="container mt-4" *ngIf="order; else notFound">
+  <h1 class="text-center">Order #{{order._id}}</h1>
+  <div class="row space-top">
+    <div class="col-md-12 mt-3">
+      <p *ngIf="authService.isAdmin()">
+        <span class="font-weight-bold lead text-warning">Created By:</span>
+        <span class="ml-2 lead">{{order.creatorEmail}}</span>
+      </p>
+      <p>
+        <span class="font-weight-bold lead text-warning">Products In Order:</span>
+        <span class="ml-2 lead">{{order.products.length}}</span>
+      </p>
+      <p>
+        <span class="font-weight-bold lead text-warning">Date:</span>
+        <span class="ml-2 lead">{{toLocaleString(order.date)}}</span>
+      </p>
+      <p>
+        <span class="font-weight-bold lead text-warning">Total Price:</span>
+        <span class="ml-2 lead">${{getTotalSum(order.products).toFixed(2)}}</span>
+      </p>
+      <p>
+        <span class="font-weight-bold lead text-warning">Status:</span>
+        <span class="ml-2 lead">{{order.status}}</span>
+      </p>
+    </div>
+  </div>
+  <div class="row mt-5">
+    <div class="col-md-12">
+      <div class="box">
+        <div class="table-responsive">
+          <table class="table table-hover">
+            <thead>
+              <tr>
+                <th>Product</th>
+                <th>Name</th>
+                <th>Price</th>
+                <th>Quantity</th>
+                <th>Subtotal</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let pr of order.products; let i = index">
+                <th>#{{i + 1}}</th>
+                <td>{{pr.name}}</td>
+                <td>$ {{pr.price.toFixed(2)}}</td>
+                <td>{{pr.quantity}}</td>
+                <td>$ {{(pr.price * pr.quantity).toFixed(2)}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<ng-template #notFound>
+  <app-not-found [message]="notFoundMessage"></app-not-found>
+</ng-template>
