@@ -23,6 +23,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{1CA775E6
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PizzaLab.Web.Tests", "Tests\PizzaLab.Web.Tests\PizzaLab.Web.Tests.csproj", "{04171F3A-D254-441C-B1CF-BA664A852968}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PizzaLab.Services.DataServices.Tests", "Tests\PizzaLab.Services.DataServices.Tests\PizzaLab.Services.DataServices.Tests.csproj", "{7A14DB90-F40B-4F13-8B55-28C422CD0D70}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -53,6 +55,10 @@ Global
 		{04171F3A-D254-441C-B1CF-BA664A852968}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{04171F3A-D254-441C-B1CF-BA664A852968}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{04171F3A-D254-441C-B1CF-BA664A852968}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7A14DB90-F40B-4F13-8B55-28C422CD0D70}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7A14DB90-F40B-4F13-8B55-28C422CD0D70}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7A14DB90-F40B-4F13-8B55-28C422CD0D70}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7A14DB90-F40B-4F13-8B55-28C422CD0D70}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -64,6 +70,7 @@ Global
 		{5BFEAA75-FE98-4354-89A2-1EE96D31EB03} = {F0E1B5F0-EC76-4746-B2A0-48203F06EFD5}
 		{3F354455-F9B6-457F-8671-303054F07878} = {D60DDC0C-5D1C-487A-B625-5683F6337854}
 		{04171F3A-D254-441C-B1CF-BA664A852968} = {1CA775E6-99DB-42A7-AE37-82067A8D68B8}
+		{7A14DB90-F40B-4F13-8B55-28C422CD0D70} = {1CA775E6-99DB-42A7-AE37-82067A8D68B8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {23C48A04-22E6-4027-AADB-27A731F1C31E}
