@@ -17,6 +17,8 @@
     using Microsoft.Extensions.Logging;
     using Microsoft.IdentityModel.Tokens;
     using Middlewares.Extensions;
+    using Services.DataServices;
+    using Services.DataServices.Contracts;
     using Swashbuckle.AspNetCore.Swagger;
     using System.Text;
 
@@ -84,6 +86,7 @@
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
             services.AddScoped(typeof(IRepository<>), typeof(EfRepository<>));
+            services.AddScoped<ICategoriesService, CategoriesService>();
 
             services.AddSwaggerGen(c =>
             {
@@ -111,6 +114,8 @@
                 .AllowCredentials());
 
             app.UseSeedAdminMiddleware();
+            app.UseSeedCategoriesMiddleware();
+
             app.UseHttpsRedirection();
             app.UseAuthentication(); 
             app.UseMvc();

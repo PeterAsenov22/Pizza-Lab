@@ -21,7 +21,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PizzaLab.Services.DataServi
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{1CA775E6-99DB-42A7-AE37-82067A8D68B8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PizzaLab.Web.Tests", "Tests\PizzaLab.Web.Tests\PizzaLab.Web.Tests.csproj", "{04171F3A-D254-441C-B1CF-BA664A852968}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PizzaLab.Web.Tests", "Tests\PizzaLab.Web.Tests\PizzaLab.Web.Tests.csproj", "{04171F3A-D254-441C-B1CF-BA664A852968}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
