@@ -3,49 +3,55 @@
     using Common;
     using Microsoft.EntityFrameworkCore;
     using System;
+    using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
 
     public class EfRepository<TEntity> : IRepository<TEntity>, IDisposable
         where TEntity : class
     {
-        private readonly PizzaLabDbContext context;
-        private DbSet<TEntity> dbSet;
+        private readonly PizzaLabDbContext _context;
+        private readonly DbSet<TEntity> _dbSet;
 
         public EfRepository(PizzaLabDbContext context)
         {
-            this.context = context;
-            this.dbSet = context.Set<TEntity>();
+            this._context = context;
+            this._dbSet = context.Set<TEntity>();
         }
 
         public IQueryable<TEntity> All()
         {
-            return this.dbSet;
+            return this._dbSet;
         }
 
         public Task AddAsync(TEntity entity)
         {
-            return this.dbSet.AddAsync(entity);
+            return this._dbSet.AddAsync(entity);
+        }
+
+        public Task AddRangeAsync(IEnumerable<TEntity> entities)
+        {
+            return this._dbSet.AddRangeAsync(entities);
         }
 
         public void Update(TEntity entity)
         {
-            this.dbSet.Update(entity);
+            this._dbSet.Update(entity);
         }
 
         public void Delete(TEntity entity)
         {
-            this.dbSet.Remove(entity);
+            this._dbSet.Remove(entity);
         }
 
         public Task<int> SaveChangesAsync()
         {
-            return this.context.SaveChangesAsync();
+            return this._context.SaveChangesAsync();
         }
 
         public void Dispose()
         {
-            this.context.Dispose();
+            this._context.Dispose();
         }
     }
 }
