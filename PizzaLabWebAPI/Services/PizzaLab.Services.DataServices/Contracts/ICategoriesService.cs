@@ -1,5 +1,6 @@
 ﻿namespace PizzaLab.Services.DataServices.Contracts
 {
+    using Data.Models;
     using System.Threading.Tasks;
 
     public interface ICategoriesService
@@ -9,5 +10,7 @@
         Task CreateAsync(string categoryName);
 
         Task CreateRangeAsync(string[] categoriesName);
+
+        Category FindByName(string categoryName);
     }
 }

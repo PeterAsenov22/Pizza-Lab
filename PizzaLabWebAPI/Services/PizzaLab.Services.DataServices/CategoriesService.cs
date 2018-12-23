@@ -41,5 +41,10 @@
             await this._categoriesRepository.AddRangeAsync(categories);
             await this._categoriesRepository.SaveChangesAsync();
         }
+
+        public Category FindByName(string categoryName)
+        {
+            return this._categoriesRepository.All().FirstOrDefault(c => c.Name == categoryName);
+        }
     }
 }
