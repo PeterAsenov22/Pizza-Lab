@@ -19,7 +19,7 @@
 
         public Category Category { get; set; }
 
-        public ICollection<Ingredient> Ingredients { get; set; }
+        public ICollection<ProductsIngredients> Ingredients { get; set; }
 
         public ICollection<ApplicationUser> Likes { get; set; }
 

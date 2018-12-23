@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PizzaLab.Data;
 
 namespace PizzaLab.Data.Migrations
 {
     [DbContext(typeof(PizzaLabDbContext))]
-    partial class PizzaLabDbContextModelSnapshot : ModelSnapshot
+    [Migration("20181223114553_ProductsIngredientsAdded")]
+    partial class ProductsIngredientsAdded
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -308,7 +310,9 @@ namespace PizzaLab.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("IngredientId");
+                    b.Property<int>("IgredientId");
+
+                    b.Property<int?>("IngredientId");
 
                     b.Property<string>("ProductId");
 
@@ -425,8 +429,7 @@ namespace PizzaLab.Data.Migrations
                 {
                     b.HasOne("PizzaLab.Data.Models.Ingredient", "Ingredient")
                         .WithMany("Products")
-                        .HasForeignKey("IngredientId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("IngredientId");
 
                     b.HasOne("PizzaLab.Data.Models.Product", "Product")
                         .WithMany("Ingredients")
