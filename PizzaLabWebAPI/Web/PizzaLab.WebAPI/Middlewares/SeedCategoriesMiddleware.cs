@@ -22,11 +22,11 @@
             {
                 await categoriesService.CreateRangeAsync(new string[]
                 {
-                    "Vegan",
+                    "Vegetarian",
                     "Traditional",
                     "Italian",
                     "Premium",
-                    "New Yorker"
+                    "American"
                 });
             }
 
