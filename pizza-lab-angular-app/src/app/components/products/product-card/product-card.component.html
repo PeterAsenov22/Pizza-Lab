@@ -5,8 +5,8 @@
 </div>
 <div class="card-footer">
   <small class="text-muted">{{product.weight}} gr</small>
-  <button type="button" class="btn btn-primary float-right btn-sm custom-button" *ngIf="!authService.isAdmin()" routerLink="/product/details/{{product._id}}">Details</button>
+  <button type="button" class="btn btn-primary float-right btn-sm custom-button" *ngIf="!authService.isAdmin()" routerLink="/product/details/{{product.id}}">Details</button>
   <button type="button" class="btn btn-warning float-right btn-sm custom-button" *ngIf="!authService.isAdmin()" (click)="addToCart()">Order</button>
   <button class="btn btn-danger float-right btn-sm custom-button" *ngIf="authService.isAdmin()" (click)="openDeleteProductModal()"><i class="fa fa-trash"></i></button>
-  <button class="btn btn-warning float-right btn-sm custom-button" *ngIf="authService.isAdmin()" routerLink="/admin/product/edit/{{product._id}}"><i class="fa fa-edit"></i></button>
+  <button class="btn btn-warning float-right btn-sm custom-button" *ngIf="authService.isAdmin()" routerLink="/admin/product/edit/{{product.id}}"><i class="fa fa-edit"></i></button>
 </div>

@@ -1,8 +1,9 @@
 import { ReviewModel } from './ReviewModel'
 
 export class ProductModel {
-  public _id: string
+  public id: string
   public name: string
+  public category: string
   public description: string
   public image: string
   public price: number

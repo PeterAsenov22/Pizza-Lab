@@ -31,7 +31,7 @@ export class ProductCardComponent {
     }
 
     const productToAdd = new CartProductModel(
-      this.product._id,
+      this.product.id,
       this.product.name,
       1,
       this.product.price)
@@ -42,7 +42,7 @@ export class ProductCardComponent {
 
   openDeleteProductModal() {
     const deleteRef = this.modalService.open(ProductDeleteModalComponent)
-    deleteRef.componentInstance.productId = this.product._id
+    deleteRef.componentInstance.productId = this.product.id
     deleteRef.result.then((result) => {
     }).catch((error) => {
     })

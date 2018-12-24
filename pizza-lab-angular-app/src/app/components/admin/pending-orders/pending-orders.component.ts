@@ -45,11 +45,11 @@ export class PendingOrdersComponent extends BaseComponent implements OnInit, OnD
   }
 
   approve(id: string) {
-    const order = this.pendingOrders.find(o => o._id === id)
+    const order = this.pendingOrders.find(o => o.id === id)
     this.ordersService.approveOrder(id)
   }
 
   trackByIds(index: number, order: OrderModel): string {
-    return order._id
+    return order.id
   }
 }

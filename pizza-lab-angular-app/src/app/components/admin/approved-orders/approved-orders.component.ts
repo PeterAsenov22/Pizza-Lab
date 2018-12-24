@@ -48,6 +48,6 @@ export class ApprovedOrdersComponent extends BaseComponent implements OnInit {
   }
 
   trackByIds(index: number, order: OrderModel): string {
-    return order._id
+    return order.id
   }
 }

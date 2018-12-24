@@ -35,7 +35,7 @@ export class EditProductComponent extends BaseComponent implements OnInit {
     this.subscription$ = this.store
       .pipe(select(state => state.products.all))
       .subscribe(products => {
-        this.product = products.find(p => p._id === this.id)
+        this.product = products.find(p => p.id === this.id)
       })
 
     this.subscriptions.push(this.subscription$)

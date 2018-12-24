@@ -10,7 +10,7 @@ import { Subscription } from 'rxjs'
 import { AuthenticationService } from '../../../core/services/authentication/authentication.service'
 import { BaseComponent } from '../../base.component'
 import { LoginModel } from '../models/LoginModel'
-import { FacebookLoginModel } from '../models/FacebookLoginModel';
+import { FacebookLoginModel } from '../models/FacebookLoginModel'
 
 @Component({
   selector: 'app-login-modal',

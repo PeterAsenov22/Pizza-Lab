@@ -21,19 +21,19 @@ function addProduct(state: ProductsState, product: ProductModel) {
 
 function editProduct(state: ProductsState, product: ProductModel) {
   return Object.assign({}, state, {
-    all: [...state.all.filter(p => p._id !== product._id), product]
+    all: [...state.all.filter(p => p.id !== product.id), product]
   })
 }
 
 function removeProduct(state: ProductsState, id: string) {
   return Object.assign({}, state, {
-    all: state.all.filter(p => p._id !== id)
+    all: state.all.filter(p => p.id !== id)
   })
 }
 
 function addProductReview(state: ProductsState, review: ReviewModel, productId: string) {
   const allProductsCopy = state.all.slice()
-  const product = allProductsCopy.find(p => p._id === productId)
+  const product = allProductsCopy.find(p => p.id === productId)
   if (product) {
     product.reviews.push(review)
   }
@@ -45,7 +45,7 @@ function addProductReview(state: ProductsState, review: ReviewModel, productId: 
 
 function likeProduct(state: ProductsState, id: string, username: string) {
   const allProductsCopy = state.all.slice()
-  const product = allProductsCopy.find(p => p._id === id)
+  const product = allProductsCopy.find(p => p.id === id)
   if (product) {
     product.likes.push(username)
   }
@@ -57,7 +57,7 @@ function likeProduct(state: ProductsState, id: string, username: string) {
 
 function unlikeProduct(state: ProductsState, id: string, username: string) {
   const allProductsCopy = state.all.slice()
-  const product = allProductsCopy.find(p => p._id === id)
+  const product = allProductsCopy.find(p => p.id === id)
   if (product) {
     product.likes = product.likes.filter(u => u !== username)
   }

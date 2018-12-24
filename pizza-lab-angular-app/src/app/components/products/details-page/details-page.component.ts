@@ -29,7 +29,7 @@ export class DetailsPageComponent extends BaseComponent implements OnInit {
       .pipe(select(state => state.products.all))
       .subscribe(data => {
         if (data.length > 0) {
-          this.product = data.find(p => p._id === this.id)
+          this.product = data.find(p => p.id === this.id)
         }
       })
 

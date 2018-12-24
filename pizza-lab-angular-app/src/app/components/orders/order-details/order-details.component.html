@@ -1,5 +1,5 @@
 <div class="container mt-4" *ngIf="order; else notFound">
-  <h1 class="text-center">Order #{{order._id}}</h1>
+  <h1 class="text-center">Order #{{order.id}}</h1>
   <div class="row space-top">
     <div class="col-md-12 mt-3">
       <p *ngIf="authService.isAdmin()">

@@ -43,7 +43,7 @@ function removeOrders(state: OrdersState) {
 
 function approveOrder(state: OrdersState, id) {
   return Object.assign({}, state, {
-    pendingOrders: state.pendingOrders.filter(o => o._id !== id)
+    pendingOrders: state.pendingOrders.filter(o => o.id !== id)
   })
 }
 

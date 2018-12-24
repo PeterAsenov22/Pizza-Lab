@@ -34,14 +34,14 @@ export class OrderDetailsComponent extends BaseComponent implements OnInit {
       .pipe(select(state => state.orders))
       .subscribe(orders => {
         if (orders.userOrders.length > 0) {
-          this.order = orders.userOrders.find(o => o._id === this.id)
+          this.order = orders.userOrders.find(o => o.id === this.id)
         } else {
             if (orders.pendingOrders.length > 0) {
-              this.order = orders.pendingOrders.find(o => o._id === this.id)
+              this.order = orders.pendingOrders.find(o => o.id === this.id)
             }
 
             if (!this.order && orders.approvedOrders.length > 0) {
-              this.order = orders.approvedOrders.find(o => o._id === this.id)
+              this.order = orders.approvedOrders.find(o => o.id === this.id)
             }
           }
         })

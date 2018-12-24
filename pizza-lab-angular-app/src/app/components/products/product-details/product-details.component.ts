@@ -25,7 +25,7 @@ export class ProductDetailsComponent {
 
   addToCart() {
     const productToAdd = new CartProductModel(
-      this.product._id,
+      this.product.id,
       this.product.name,
       1,
       this.product.price)
@@ -35,10 +35,10 @@ export class ProductDetailsComponent {
   }
 
   onLikeButtonClick() {
-    this.productsService.likeProduct(this.product._id, this.authService.getUsername())
+    this.productsService.likeProduct(this.product.id, this.authService.getUsername())
   }
 
   onUnlikeButtonClick() {
-    this.productsService.unlikeProduct(this.product._id, this.authService.getUsername())
+    this.productsService.unlikeProduct(this.product.id, this.authService.getUsername())
   }
 }

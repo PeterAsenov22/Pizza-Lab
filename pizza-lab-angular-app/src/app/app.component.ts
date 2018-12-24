@@ -28,7 +28,7 @@ export class AppComponent extends BaseComponent implements OnInit {
   }
 
   ngOnInit () {
-//   this.productsService.getAllProducts()
+    this.productsService.getAllProducts()
 //
 //   if (this.authService.isAuthenticated() && !this.authService.isAdmin()) {
 //     this.ordersService.getUserOrders()
@@ -39,20 +39,20 @@ export class AppComponent extends BaseComponent implements OnInit {
 //     this.ordersService.getApprovedOrders()
 //   }
 //
-//   this.subscription$ = this.store
-//     .pipe(select(state => state.http.currentGetCalls), delay(0))
-//     .subscribe(calls => {
-//       if ((!this.getCalls || this.getCalls === 0) && calls > 0) {
-//         this.spinner.show()
-//       }
-//
-//       if (this.getCalls > 0 && calls === 0) {
-//         this.spinner.hide()
-//       }
-//
-//       this.getCalls = calls
-//     })
-//
-//   this.subscriptions.push(this.subscription$)
+   this.subscription$ = this.store
+     .pipe(select(state => state.http.currentGetCalls), delay(0))
+     .subscribe(calls => {
+       if ((!this.getCalls || this.getCalls === 0) && calls > 0) {
+         this.spinner.show()
+       }
+
+       if (this.getCalls > 0 && calls === 0) {
+         this.spinner.hide()
+       }
+
+       this.getCalls = calls
+     })
+
+   this.subscriptions.push(this.subscription$)
   }
 }

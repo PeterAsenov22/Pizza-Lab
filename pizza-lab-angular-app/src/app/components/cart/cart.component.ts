@@ -31,19 +31,19 @@ export class CartComponent extends BaseComponent implements OnInit {
       .subscribe(state => {
         const products = state.products.all
         const cartProductsIds = state.cart.products.map(p => p.productId)
-        const productsInCart = products.filter(p => cartProductsIds.includes(p._id))
+        const productsInCart = products.filter(p => cartProductsIds.includes(p.id))
 
         let total = 0
         const allProducts: ProductInCartModel[] = []
 
         for (const pr of productsInCart) {
           const product = new ProductInCartModel()
-          product._id = pr._id
+          product.id = pr.id
           product.image = pr.image
           product.ingredients = pr.ingredients
           product.name = pr.name
           product.price = pr.price
-          product.quantity = state.cart.products.find(p => p.productId === pr._id).quantity
+          product.quantity = state.cart.products.find(p => p.productId === pr.id).quantity
           total += product.quantity * product.price
           allProducts.push(product)
         }
@@ -76,7 +76,7 @@ export class CartComponent extends BaseComponent implements OnInit {
     const products = []
     for (const pr of this.products) {
       products.push({
-        id: pr._id,
+        id: pr.id,
         name: pr.name,
         quantity: pr.quantity,
         price: pr.price
@@ -87,6 +87,6 @@ export class CartComponent extends BaseComponent implements OnInit {
   }
 
   trackByIds(index: number, product: ProductInCartModel): string {
-    return product._id
+    return product.id
   }
 }

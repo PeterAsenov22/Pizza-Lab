@@ -15,7 +15,7 @@ import { GetAllProducts, AddProductReview,
 import { GetRequestBegin, GetRequestEnd } from '../../store/http/http.actions'
 import { ResponseDataModel } from '../../models/ResponseDataModel'
 
-const baseUrl = 'http://localhost:5000/pizza/'
+const baseUrl = 'https://localhost:44393/api/products/'
 const addReviewUrl = 'http://localhost:5000/reviews/create/'
 const allProductsUrl = baseUrl + 'all'
 const createProductUrl = baseUrl + 'create'
@@ -69,7 +69,7 @@ export class ProductsService {
   editProduct(model: ProductModel) {
     this.spinner.show()
     this.http
-      .post(`${editProductUrl}${model._id}`, model)
+      .post(`${editProductUrl}${model.id}`, model)
       .subscribe((res: ResponseDataModel) => {
         this.store.dispatch(new EditProduct(res.data))
         this.spinner.hide()

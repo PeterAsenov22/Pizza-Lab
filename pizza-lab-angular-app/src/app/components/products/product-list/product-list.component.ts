@@ -19,7 +19,7 @@ export class ProductListComponent {
   }
 
   trackByIds(index: number, product: ProductModel): string {
-    return product._id
+    return product.id
   }
 }
 
