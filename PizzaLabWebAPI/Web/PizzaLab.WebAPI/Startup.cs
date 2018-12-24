@@ -87,6 +87,8 @@
 
             services.AddScoped(typeof(IRepository<>), typeof(EfRepository<>));
             services.AddScoped<ICategoriesService, CategoriesService>();
+            services.AddScoped<IIngredientsService, IngredientsService>();
+            services.AddScoped<IProductsService, ProductsService>();
 
             services.AddSwaggerGen(c =>
             {
@@ -115,6 +117,8 @@
 
             app.UseSeedAdminMiddleware();
             app.UseSeedCategoriesMiddleware();
+            app.UseSeedIngredientsMiddleware();
+            app.UseSeedProductsMiddleware();
 
             app.UseHttpsRedirection();
             app.UseAuthentication(); 
