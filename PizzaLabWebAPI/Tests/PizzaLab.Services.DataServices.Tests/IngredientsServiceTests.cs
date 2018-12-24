@@ -39,7 +39,7 @@
         }
 
         [Fact]
-        public async Task CreateAsyncShouldCreateCategorySuccessfully()
+        public async Task CreateAsyncShouldCreateIngredientSuccessfully()
         {
             await _ingredientsService.CreateAsync("ham");
 
@@ -48,7 +48,7 @@
         }
 
         [Fact]
-        public async Task CreateRangeAsyncShouldCreateCategorySuccessfully()
+        public async Task CreateRangeAsyncShouldCreateIngredientsSuccessfully()
         {
             await _ingredientsService.CreateRangeAsync(new string[]
             {
