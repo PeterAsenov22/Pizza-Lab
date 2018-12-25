@@ -1,10 +1,8 @@
+import { AuthenticationService } from '../../../core/services/authentication/authentication.service'
 import { Component, Input } from '@angular/core'
 import { FormBuilder, Validators } from '@angular/forms'
-
+import { ReviewsService } from '../../../core/services/reviews/reviews.service'
 import { ReviewModel } from '../models/ReviewModel'
-
-import { AuthenticationService } from '../../../core/services/authentication/authentication.service'
-import { ProductsService } from '../../../core/services/products/products.service'
 import { toLocaleString } from '../../../core/utils/helperFunctions'
 
 @Component({
@@ -16,12 +14,12 @@ export class ProductReviewsComponent {
   protected reviewForm
   protected toLocaleString = toLocaleString
   @Input() protected reviews: ReviewModel[]
-  @Input() private id: string
+  @Input() private productId: string
 
   constructor (
     protected formBuilder: FormBuilder,
     protected authService: AuthenticationService,
-    private productsService: ProductsService ) {
+    private reviewsService: ReviewsService ) {
     this.createForm()
   }
 
@@ -33,7 +31,7 @@ export class ProductReviewsComponent {
     }
 
     const formValue = this.reviewForm.value
-    this.productsService.addProductReview(formValue, this.id)
+    this.reviewsService.addProductReview(formValue, this.productId)
     this.reviewForm.reset()
   }
 

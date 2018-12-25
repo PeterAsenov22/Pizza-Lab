@@ -1,6 +1,6 @@
 <div *ngIf="product; else notFound">
   <app-product-details [product]="product"></app-product-details>
-  <app-product-reviews [id]="id" [reviews]="product?.reviews"></app-product-reviews>
+  <app-product-reviews [productId]="productId" [reviews]="product?.reviews"></app-product-reviews>
 </div>
 <ng-template #notFound>
   <app-not-found [message]="notFoundMessage"></app-not-found>

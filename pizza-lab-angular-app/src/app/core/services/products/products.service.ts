@@ -8,21 +8,19 @@ import { ToastrService } from 'ngx-toastr'
 import { AppState } from '../../store/app.state'
 import { CreateProductModel } from '../../../components/admin/models/CreateProductModel'
 import { ProductModel } from '../../../components/products/models/ProductModel'
-import { ReviewModel } from '../../../components/products/models/ReviewModel'
 
-import { GetAllProducts, AddProductReview,
+import { GetAllProducts,
   LikeProduct, UnlikeProduct, CreateProduct, DeleteProduct, EditProduct } from '../../store/products/products.actions'
 import { GetRequestBegin, GetRequestEnd } from '../../store/http/http.actions'
 import { ResponseDataModel } from '../../models/ResponseDataModel'
 
-const baseUrl = 'https://localhost:44393/api/products/'
-const addReviewUrl = 'http://localhost:5000/reviews/create/'
-const allProductsUrl = baseUrl + 'all'
-const createProductUrl = baseUrl + 'create'
-const editProductUrl = baseUrl + 'edit/'
-const deleteProductUrl = baseUrl + 'delete/'
-const likeProductUrl = baseUrl + 'like/'
-const unlikeProductUrl = baseUrl + 'unlike/'
+const baseUrl = 'https://localhost:44393/api/products'
+const allProductsUrl = baseUrl + '/all'
+const createProductUrl = baseUrl + '/create'
+const editProductUrl = baseUrl + '/edit/'
+const deleteProductUrl = baseUrl + '/delete/'
+const likeProductUrl = baseUrl + '/like/'
+const unlikeProductUrl = baseUrl + '/unlike/'
 const fiveMinutes = 1000 * 60 * 5
 
 @Injectable()
@@ -49,6 +47,8 @@ export class ProductsService {
 
     this.http.get<ProductModel[]>(allProductsUrl)
       .subscribe(products => {
+        products.forEach(p => p.reviews = [])
+
         this.store.dispatch(new GetAllProducts(products))
         this.store.dispatch(new GetRequestEnd())
       })
@@ -87,17 +87,6 @@ export class ProductsService {
         this.spinner.hide()
         activeModal.close()
         this.toastr.success('Product deleted successfully.')
-      })
-  }
-
-  addProductReview (model, id: string) {
-    this.spinner.show()
-    this.http
-      .post(`${addReviewUrl}${id}`, model)
-      .subscribe((res: ResponseDataModel) => {
-        this.store.dispatch(new AddProductReview(res.data, id))
-        this.spinner.hide()
-        this.toastr.success('Review added successfully.')
       })
   }
 
