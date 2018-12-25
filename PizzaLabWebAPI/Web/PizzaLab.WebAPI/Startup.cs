@@ -89,6 +89,7 @@
             services.AddScoped<ICategoriesService, CategoriesService>();
             services.AddScoped<IIngredientsService, IngredientsService>();
             services.AddScoped<IProductsService, ProductsService>();
+            services.AddScoped<IReviewsService, ReviewsService>();
 
             services.AddSwaggerGen(c =>
             {
