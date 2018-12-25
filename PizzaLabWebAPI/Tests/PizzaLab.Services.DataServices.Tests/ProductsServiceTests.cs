@@ -111,5 +111,67 @@
             Assert.Equal(500, secondProduct.Weight);
             Assert.Equal("https://images.pizza33.ua/products/product/yQfkJqZweoLn9omo68oz5BnaGzaIE0UJ.jpg", secondProduct.Image);
         }
+
+        [Fact]
+        public async Task AllShouldReturnCorrectValues()
+        {
+            var products = new List<Product>();
+
+            var pollo = new Product
+            {
+                Name = "Pollo",
+                Description = "Pollo might be your choice when you are in the mood for something healthy. Tender grilled chicken, creamy feta, roasted red peppers and corn are generously piled on top of our famous tomato sauce.",
+                Price = 10.90m,
+                Weight = 550,
+                Image = "http://www.ilforno.bg/45-large_default/polo.jpg",
+                Ingredients = new List<ProductsIngredients>(),
+                Category = new Category(),
+                Likes = new List<ApplicationUser>(),
+                Reviews = new List<Review>()
+            };
+            products.Add(pollo);
+
+            var diablo = new Product
+            {
+                Name = "Diablo",
+                Description = "Pizza diavola means the devils pizza and is quite a spicy little devil and one of my favourite pizzas. If you like spicy hot and chilli flavours you will enjoy this pizza.",
+                Price = 8.90m,
+                Weight = 500,
+                Image = "https://images.pizza33.ua/products/product/yQfkJqZweoLn9omo68oz5BnaGzaIE0UJ.jpg",
+                Ingredients = new List<ProductsIngredients>(),
+                Category = new Category(),
+                Likes = new List<ApplicationUser>(),
+                Reviews = new List<Review>()
+            };
+            products.Add(diablo);
+
+            await _productsService.CreateRangeAsync(products);
+
+            Assert.Equal(_productsRepository.All().Count(), _productsService.All().Count());
+        }
+
+        [Fact]
+        public void ExistsShouldReturnFalse()
+        {
+            Assert.False(_productsService.Exists("123456"));
+        }
+
+        [Fact]
+        public async Task ExistsShouldReturnTrue()
+        {
+            var diablo = new Product
+            {
+                Name = "Diablo",
+                Description = "Pizza diavola means the devils pizza and is quite a spicy little devil and one of my favourite pizzas. If you like spicy hot and chilli flavours you will enjoy this pizza.",
+                Price = 8.90m,
+                Weight = 500,
+                Image = "https://images.pizza33.ua/products/product/yQfkJqZweoLn9omo68oz5BnaGzaIE0UJ.jpg"
+            };
+
+            await _productsService.CreateAsync(diablo);
+            var productId = _productsRepository.All().First().Id;
+
+            Assert.True(_productsService.Exists(productId));
+        }
     }
 }

@@ -59,5 +59,14 @@
             Assert.Equal("Traditional", _categoriesRepository.All().First().Name);
             Assert.Equal("Vegan", _categoriesRepository.All().Last().Name);
         }
+
+        [Fact]
+        public async Task FindByNameShouldReturnCorrectValues()
+        {
+            await _categoriesService.CreateAsync("Traditional");
+
+            var category = _categoriesService.FindByName("Traditional");
+            Assert.Equal("Traditional", category.Name);
+        }
     }
 }
