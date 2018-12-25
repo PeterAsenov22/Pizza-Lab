@@ -6,10 +6,14 @@
 
     public interface IProductsService
     {
+        IEnumerable<Product> All();
+
         bool Any();
 
         Task CreateAsync(Product product);
 
         Task CreateRangeAsync(IEnumerable<Product> products);
+
+        bool Exists(string productId);
     }
 }

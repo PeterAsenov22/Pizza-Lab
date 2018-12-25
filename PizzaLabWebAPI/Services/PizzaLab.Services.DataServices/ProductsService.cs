@@ -1,10 +1,11 @@
 ﻿namespace PizzaLab.Services.DataServices
-{
+{   
     using Contracts;
     using Data.Common;
     using Data.Models;
-    using Microsoft.EntityFrameworkCore.Internal;
+    using Microsoft.EntityFrameworkCore;
     using System.Collections.Generic;
+    using System.Linq;
     using System.Threading.Tasks;
 
     public class ProductsService : IProductsService
@@ -14,6 +15,16 @@
         public ProductsService(IRepository<Product> productsRepository)
         {
             this._productsRepository = productsRepository;
+        }
+
+        public IEnumerable<Product> All()
+        {
+            return this._productsRepository
+                .All()
+                .Include(p => p.Category)
+                .Include(p => p.Ingredients)
+                .ThenInclude(pi => pi.Ingredient)
+                .Include(p => p.Likes);
         }
 
         public bool Any()
@@ -31,6 +42,11 @@
         {
             await this._productsRepository.AddRangeAsync(products);
             await this._productsRepository.SaveChangesAsync();
+        }
+
+        public bool Exists(string productId)
+        {
+            return this._productsRepository.All().Any(p => p.Id == productId);
         }
     }
 }
