@@ -9,6 +9,7 @@
     using Models.Reviews.InputModels;
     using Models.Reviews.ViewModels;
     using Services.DataServices.Contracts;
+    using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
@@ -35,8 +36,8 @@
         [HttpGet("{productId}")]
         [ProducesDefaultResponseType]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         public ActionResult<IEnumerable<ReviewViewModel>> Get(string productId)
         {
             if (!this._productsService.Exists(productId))
@@ -56,7 +57,8 @@
         [HttpPost("{productId}")]
         [ProducesDefaultResponseType]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]  
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         public async Task<ActionResult<SuccessViewModel<ReviewViewModel>>> Post([FromRoute] string productId, [FromBody] CreateReviewInputModel model)
         {
             if (!this._productsService.Exists(productId))
@@ -67,14 +69,24 @@
                 });
             }
 
-            var creator = await this._userManager.FindByNameAsync(this.User.Identity.Name);
-            var review = await this._reviewsService.CreateAsync(model.Review, creator.Id, productId);
-
-            return new SuccessViewModel<ReviewViewModel>
+            try
             {
-                Message = "Review added successfully.",
-                Data = this._mapper.Map<ReviewViewModel>(review)
-            };
+                var creator = await this._userManager.FindByNameAsync(this.User.Identity.Name);
+                var review = await this._reviewsService.CreateAsync(model.Review, creator.Id, productId);
+
+                return new SuccessViewModel<ReviewViewModel>
+                {
+                    Message = "Review added successfully.",
+                    Data = this._mapper.Map<ReviewViewModel>(review)
+                };
+            }
+            catch (Exception)
+            {
+                return BadRequest(new BadRequestViewModel
+                {
+                    Message = "Something went wrong."
+                });
+            }
         }
     }
 }
