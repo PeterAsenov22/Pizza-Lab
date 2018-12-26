@@ -23,7 +23,6 @@ export class ErrorInterceptor implements HttpInterceptor {
       .pipe(catchError((err: HttpErrorResponse) => {
         switch (err.status) {
           case 400:
-          case 401:
           case 404:
             this.spinner.hide()
 
@@ -36,6 +35,9 @@ export class ErrorInterceptor implements HttpInterceptor {
               this.toastr.error(err.error.message, 'Warning!')
             }
             break
+          case 401:
+            this.spinner.hide()
+            this.toastr.error(err.error.title, 'Warning!')
         }
 
         return throwError(err)
