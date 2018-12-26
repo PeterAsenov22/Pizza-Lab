@@ -47,5 +47,10 @@
             await this._ingredientsRepository.AddRangeAsync(ingredients);
             await this._ingredientsRepository.SaveChangesAsync();
         }
+
+        public Ingredient FindByName(string ingredientName)
+        {
+            return this._ingredientsRepository.All().FirstOrDefault(i => i.Name.ToLower() == ingredientName.ToLower());
+        }
     }
 }

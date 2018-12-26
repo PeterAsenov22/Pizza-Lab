@@ -13,5 +13,7 @@
         Task CreateAsync(string ingredientName);
 
         Task CreateRangeAsync(string[] ingredientsName);
+
+        Ingredient FindByName(string ingredientName);
     }
 }
