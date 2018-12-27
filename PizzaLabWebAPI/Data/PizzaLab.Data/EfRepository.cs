@@ -44,6 +44,11 @@
             this._dbSet.Remove(entity);
         }
 
+        public void DeleteRange(IEnumerable<TEntity> entities)
+        {
+            this._dbSet.RemoveRange(entities);
+        }
+
         public Task<int> SaveChangesAsync()
         {
             return this._context.SaveChangesAsync();
