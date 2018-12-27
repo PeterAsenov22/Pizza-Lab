@@ -21,7 +21,7 @@
 
         public ICollection<ProductsIngredients> Ingredients { get; set; }
 
-        public ICollection<ApplicationUser> Likes { get; set; }
+        public ICollection<UsersLikes> Likes { get; set; }
 
         public ICollection<Review> Reviews { get; set; }
     }

@@ -126,7 +126,7 @@
                 Image = "http://www.ilforno.bg/45-large_default/polo.jpg",
                 Ingredients = new List<ProductsIngredients>(),
                 Category = new Category(),
-                Likes = new List<ApplicationUser>(),
+                Likes = new List<UsersLikes>(),
                 Reviews = new List<Review>()
             };
             products.Add(pollo);
@@ -140,7 +140,7 @@
                 Image = "https://images.pizza33.ua/products/product/yQfkJqZweoLn9omo68oz5BnaGzaIE0UJ.jpg",
                 Ingredients = new List<ProductsIngredients>(),
                 Category = new Category(),
-                Likes = new List<ApplicationUser>(),
+                Likes = new List<UsersLikes>(),
                 Reviews = new List<Review>()
             };
             products.Add(diablo);

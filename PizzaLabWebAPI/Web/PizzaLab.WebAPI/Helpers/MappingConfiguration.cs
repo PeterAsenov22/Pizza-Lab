@@ -22,7 +22,7 @@
                 .ForMember(dest => dest.Ingredients,
                     opt => opt.MapFrom(src => src.Ingredients.Select(i => i.Ingredient.Name)))
                 .ForMember(dest => dest.Likes,
-                    opt => opt.MapFrom(src => src.Likes.Select(u => u.UserName)));
+                    opt => opt.MapFrom(src => src.Likes.Select(ul => ul.ApplicationUser.UserName)));
         }
     }
 }

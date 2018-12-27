@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PizzaLab.Data;
 
 namespace PizzaLab.Data.Migrations
 {
     [DbContext(typeof(PizzaLabDbContext))]
-    partial class PizzaLabDbContextModelSnapshot : ModelSnapshot
+    [Migration("20181227112334_UsersLikesTableAdded")]
+    partial class UsersLikesTableAdded
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

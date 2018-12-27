@@ -12,5 +12,7 @@
         public ICollection<Review> Reviews { get; set; }
 
         public ICollection<Order> Orders { get; set; }
+        
+        public ICollection<UsersLikes> ProductsLiked { get; set; }
     }
 }
