@@ -14,6 +14,10 @@
 
         Task CreateRangeAsync(IEnumerable<Product> products);
 
+        Task DeleteAsync(string productId);
+
+        Task EditAsync(Product product);
+
         bool Exists(string productId);
     }
 }

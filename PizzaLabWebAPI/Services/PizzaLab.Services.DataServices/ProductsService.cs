@@ -12,7 +12,8 @@
     {
         private readonly IRepository<Product> _productsRepository;
 
-        public ProductsService(IRepository<Product> productsRepository)
+        public ProductsService(
+            IRepository<Product> productsRepository)
         {
             this._productsRepository = productsRepository;
         }
@@ -24,7 +25,8 @@
                 .Include(p => p.Category)
                 .Include(p => p.Ingredients)
                 .ThenInclude(pi => pi.Ingredient)
-                .Include(p => p.Likes);
+                .Include(p => p.Likes)
+                .ThenInclude(ul => ul.ApplicationUser);
         }
 
         public bool Any()
@@ -44,9 +46,27 @@
             await this._productsRepository.SaveChangesAsync();
         }
 
+        public async Task DeleteAsync(string productId)
+        {
+            var product = this._productsRepository
+                .All()
+                .First(p => p.Id == productId);
+
+            this._productsRepository.Delete(product);
+            await this._productsRepository.SaveChangesAsync();
+        }
+
+        public async Task EditAsync(Product product)
+        {
+            this._productsRepository.Update(product);
+            await this._productsRepository.SaveChangesAsync();
+        }
+
         public bool Exists(string productId)
         {
-            return this._productsRepository.All().Any(p => p.Id == productId);
+            return this._productsRepository
+                .All()
+                .Any(p => p.Id == productId);
         }
     }
 }
