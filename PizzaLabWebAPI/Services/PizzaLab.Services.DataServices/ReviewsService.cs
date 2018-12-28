@@ -42,5 +42,19 @@
                 .Where(r => r.ProductId == productId)
                 .ToList();
         }
+
+        public async Task DeleteProductReviewsAsync(string productId)
+        {
+            var reviews = this._reviewsRepository
+                .All()
+                .Where(r => r.ProductId == productId)
+                .ToList();
+
+            if (reviews.Any())
+            {
+                this._reviewsRepository.DeleteRange(reviews);
+                await this._reviewsRepository.SaveChangesAsync();
+            }          
+        }
     }
 }
