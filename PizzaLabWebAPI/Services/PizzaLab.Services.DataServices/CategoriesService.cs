@@ -3,6 +3,7 @@
     using Contracts;
     using Data.Common;
     using Data.Models;
+    using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
 
@@ -13,6 +14,11 @@
         public CategoriesService(IRepository<Category> categoriesRepository)
         {
             this._categoriesRepository = categoriesRepository;
+        }
+
+        public IEnumerable<Category> All()
+        {
+            return this._categoriesRepository.All();
         }
 
         public bool Any()
