@@ -31,7 +31,8 @@ export class JWTInterceptor implements HttpInterceptor {
     if (req.url.endsWith('/api/account/login')
          || req.url.endsWith('/api/account/register')
          || req.url.endsWith('/api/account/login/external/facebook')
-         || req.url.endsWith('/products/all')) {
+         || req.url.endsWith('/products/all')
+         || (req.url.endsWith('/categories') && req.method === 'GET')) {
       req = req.clone({
         setHeaders: {
           'Content-Type': 'application/json'
