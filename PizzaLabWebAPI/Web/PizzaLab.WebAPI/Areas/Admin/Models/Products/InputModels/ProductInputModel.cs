@@ -7,7 +7,7 @@
     public class ProductInputModel
     {
         [Required]
-        [MinLength(3, ErrorMessage = "Name should be at least 3 characters long.")]
+        [StringLength(20, MinimumLength = 3, ErrorMessage = "Name should be at least 3 characters long and not more than 20.")]
         public string Name { get; set; }
 
         [Required]
