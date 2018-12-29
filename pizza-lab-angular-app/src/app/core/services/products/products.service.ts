@@ -14,13 +14,11 @@ import { GetAllProducts,
 import { GetRequestBegin, GetRequestEnd } from '../../store/http/http.actions'
 import { ResponseDataModel } from '../../models/ResponseDataModel'
 
-const baseUrl = 'https://localhost:44393/api/products'
-const allProductsUrl = baseUrl + '/all'
-const createProductUrl = baseUrl + '/create'
-const editProductUrl = baseUrl + '/edit/'
-const deleteProductUrl = baseUrl + '/delete/'
-const likeProductUrl = baseUrl + '/like/'
-const unlikeProductUrl = baseUrl + '/unlike/'
+const baseUrl = 'https://localhost:44393/api'
+const allProductsUrl = baseUrl + '/products/all'
+const likeProductUrl = baseUrl + '/products/like/'
+const unlikeProductUrl = baseUrl + '/products/unlike/'
+const adminProductsUrl = baseUrl + '/admin/products'
 const fiveMinutes = 1000 * 60 * 5
 
 @Injectable()
@@ -57,36 +55,42 @@ export class ProductsService {
   createProduct(model: CreateProductModel) {
     this.spinner.show()
     this.http
-      .post(createProductUrl, model)
+      .post(adminProductsUrl, model)
       .subscribe((res: ResponseDataModel) => {
-        this.store.dispatch(new CreateProduct(res.data))
+        const product: ProductModel = res.data
+        product.reviews = []
+
+        this.store.dispatch(new CreateProduct(product))
         this.spinner.hide()
         this.router.navigate(['/menu'])
-        this.toastr.success('Product added successfully.')
+        this.toastr.success(res.message)
       })
   }
 
   editProduct(model: ProductModel) {
     this.spinner.show()
     this.http
-      .post(`${editProductUrl}${model.id}`, model)
+      .put(`${adminProductsUrl}/${model.id}`, model)
       .subscribe((res: ResponseDataModel) => {
-        this.store.dispatch(new EditProduct(res.data))
+        const product: ProductModel = res.data
+        product.reviews = []
+
+        this.store.dispatch(new EditProduct(product))
         this.spinner.hide()
         this.router.navigate(['/menu'])
-        this.toastr.success('Product edited successfully.')
+        this.toastr.success(res.message)
       })
   }
 
   deleteProduct(id: string, activeModal) {
     this.spinner.show()
     this.http
-      .delete(`${deleteProductUrl}${id}`)
-      .subscribe(() => {
+      .delete(`${adminProductsUrl}/${id}`)
+      .subscribe((res: ResponseDataModel) => {
         this.store.dispatch(new DeleteProduct(id))
         this.spinner.hide()
         activeModal.close()
-        this.toastr.success('Product deleted successfully.')
+        this.toastr.success(res.message)
       })
   }
 

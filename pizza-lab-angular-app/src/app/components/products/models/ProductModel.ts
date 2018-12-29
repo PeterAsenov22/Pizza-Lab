@@ -8,7 +8,7 @@ export class ProductModel {
   public image: string
   public price: number
   public weight: number
-  public ingredients: Array<String>
-  public likes: Array<String>
+  public ingredients: Array<string>
+  public likes: Array<string>
   public reviews: ReviewModel[]
 }
