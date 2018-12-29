@@ -3,7 +3,9 @@
     using AutoMapper;
     using Data.Models;
     using Models.Account.FacebookModels;
-    using Models.Account.InputModels;
+    using Models.Account.InputModels;   
+    using Models.Categories.ViewModels;
+    using Models.Ingredients.ViewModels;
     using Models.Reviews.ViewModels;
     using Models.Products.ViewModels;
     using System.Linq;  
@@ -23,6 +25,8 @@
                     opt => opt.MapFrom(src => src.Ingredients.Select(i => i.Ingredient.Name)))
                 .ForMember(dest => dest.Likes,
                     opt => opt.MapFrom(src => src.Likes.Select(ul => ul.ApplicationUser.UserName)));
+            this.CreateMap<Category, CategoryViewModel>();
+            this.CreateMap<Ingredient, IngredientViewModel>();
         }
     }
 }
