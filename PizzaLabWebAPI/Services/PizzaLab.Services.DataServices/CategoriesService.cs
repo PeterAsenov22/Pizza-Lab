@@ -18,7 +18,9 @@
 
         public IEnumerable<Category> All()
         {
-            return this._categoriesRepository.All();
+            return this._categoriesRepository
+                .All()
+                .OrderBy(c => c.Name);
         }
 
         public bool Any()

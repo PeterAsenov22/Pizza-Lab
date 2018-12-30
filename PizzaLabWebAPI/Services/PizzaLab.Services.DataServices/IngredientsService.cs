@@ -23,7 +23,9 @@
 
         public IEnumerable<Ingredient> All()
         {
-            return this._ingredientsRepository.All();
+            return this._ingredientsRepository
+                .All()
+                .OrderBy(i => i.Name);
         }
 
         public async Task CreateAsync(string ingredientName)
