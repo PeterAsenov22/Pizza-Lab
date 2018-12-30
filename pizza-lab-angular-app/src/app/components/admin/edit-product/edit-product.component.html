@@ -6,7 +6,7 @@
   </div>
   <form [formGroup]="editForm" (ngSubmit)="edit()">
     <div class="row space-top">
-      <div class="col-md-6">
+      <div class="col-md-5">
         <div class="form-group">
           <label class="form-control-label" for="name">Name</label>
           <input
@@ -22,31 +22,43 @@
             <div *ngIf="name.errors.minlength">
               Name must be at least 3 characters long.
             </div>
+            <div *ngIf="name.errors.maxlength">
+              Name must not be more than 20 characters long.
+            </div>
           </div>
         </div>
-        <div class="form-group">
+        <div class="form-group mt-5">
+          <label class="form-control-label" for="category">Category</label>
+          <ng-select [items]="categories"
+           bindLabel="name"
+           bindValue="name"
+           formControlName="category"
+           id="category"
+           placeholder="Select category">
+          </ng-select>
+        </div>
+        <div class="form-group mt-5">
           <label class="form-control-label" for="ingredients">Ingredients</label>
-          <input
-            type="text"
-            class="form-control" 
-            id="ingredients" 
-            formControlName="ingredients"
-            [ngClass]="{ 'is-invalid': ingredients.touched && ingredients.errors }" />
-          <div *ngIf="ingredients.errors" class="invalid-feedback">
-            <div *ngIf="ingredients.errors.required">
-              Ingredients are required.
-            </div>
-            <div *ngIf="ingredients.errors.minlength">
-              Ingredients must be at least 3 characters long.
-            </div>
-            <div *ngIf="ingredients.errors.spaceAfterComma">
-              There should not be empty space after comma.
-            </div>
-            <div *ngIf="ingredients.errors.commaAtTheEnd">
-              There should not be comma at the end.
-            </div>
-          </div>
+          <ng-select
+              [items]="availableIngredients"
+              [multiple]="true"
+              bindLabel="name"
+              [selectableGroup]="true"
+              [closeOnSelect]="false"
+              bindLabel="name"
+              placeholder="Select ingredients"
+              (add)="addIngredient($event.name)"
+              (remove)="removeIngredient($event.label)"
+              [(ngModel)]="selectedIngredients"
+              [ngModelOptions]="{standalone: true}">
+            <ng-template ng-option-tmp let-item="item" let-item$="item$" let-index="index">
+              <input id="item-{{index}}" type="checkbox" [ngModel]="item$.selected" [ngModelOptions]="{standalone: true}"/> {{item.name}}
+            </ng-template>
+          </ng-select>
         </div>
+      </div>
+      <div class="col-md-2"></div>
+      <div class="col-md-5">
         <div class="form-group">
             <label class="form-control-label" for="description">Description</label>
             <input
@@ -124,7 +136,13 @@
             </div>
           </div>
         </div>
-        <input type="submit" class="btn btn-warning" value="Edit" [disabled]="(editForm.invalid || editForm.pristine)" />
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="title">
+          <input type="submit" class="btn btn-warning" value="Edit" [disabled]="(editForm.invalid || editForm.pristine)" />
+        </div>
       </div>
     </div>
   </form>
