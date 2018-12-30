@@ -32,7 +32,8 @@
               "node_modules/angular-bootstrap-md/scss/mdb-free.scss",
               "src/styles.scss",
               "./node_modules/bootstrap/dist/css/bootstrap.min.css",
-              "node_modules/ngx-toastr/toastr.css"
+              "node_modules/ngx-toastr/toastr.css",
+              "node_modules/@ng-select/ng-select/themes/default.theme.css"
             ],
             "scripts": [
               "node_modules/chart.js/dist/Chart.js",
