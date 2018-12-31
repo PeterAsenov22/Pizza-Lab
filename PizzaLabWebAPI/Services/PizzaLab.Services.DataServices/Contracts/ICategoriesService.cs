@@ -1,12 +1,12 @@
 ﻿namespace PizzaLab.Services.DataServices.Contracts
 {
-    using Data.Models;
+    using Models.Categories;
     using System.Collections.Generic;
     using System.Threading.Tasks;
 
     public interface ICategoriesService
     {
-        IEnumerable<Category> All();
+        IEnumerable<CategoryDto> All();
 
         bool Any();
 
@@ -14,6 +14,6 @@
 
         Task CreateRangeAsync(string[] categoriesName);
 
-        Category FindByName(string categoryName);
+        CategoryDto FindByName(string categoryName);
     }
 }
