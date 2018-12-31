@@ -1,5 +1,5 @@
 ﻿namespace PizzaLab.WebAPI.Helpers
-{
+{   
     using AutoMapper;
     using Data.Models;  
     using Models.Account.FacebookModels;
@@ -10,6 +10,7 @@
     using Models.Orders.ViewModels;
     using Models.Products.ViewModels;
     using Models.Reviews.ViewModels;
+    using Services.DataServices.Models.Ingredients;
     using Services.DataServices.Models.Orders;
     using Services.DataServices.Models.Categories;
     using System.Linq;  
@@ -34,7 +35,8 @@
             this.CreateMap<Category, CategoryDto>();
             this.CreateMap<CategoryDto, CategoryViewModel>();
 
-            this.CreateMap<Ingredient, IngredientViewModel>();
+            this.CreateMap<Ingredient, IngredientDto>();
+            this.CreateMap<IngredientDto, IngredientViewModel>();
 
             this.CreateMap<OrderProductInputModel, OrderProductDto>();
             this.CreateMap<OrderProductDto, OrderProductViewModel>();

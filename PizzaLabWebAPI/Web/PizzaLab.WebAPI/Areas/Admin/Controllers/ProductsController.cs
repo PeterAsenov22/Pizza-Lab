@@ -6,13 +6,14 @@
     using Microsoft.AspNetCore.Mvc;
     using Models.Products.InputModels;
     using Services.DataServices.Contracts;
+    using Services.DataServices.Models.Ingredients;
     using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
     using WebAPI.Controllers;
     using WebAPI.Models.Common;
-    using WebAPI.Models.Products.ViewModels;
+    using WebAPI.Models.Products.ViewModels;  
 
     [Route("api/admin/[controller]")]
     public class ProductsController : ApiController
@@ -63,7 +64,7 @@
                 var productCategory = _categoriesService.FindByName(model.Category);
                 if (productCategory != null)
                 {
-                    var ingredients = new List<Ingredient>();
+                    var ingredients = new List<IngredientDto>();
                     foreach (var ingredientName in model.Ingredients)
                     {
                         var ingredient = this._ingredientsService.FindByName(ingredientName);
@@ -154,7 +155,7 @@
                         });
                     }
 
-                    var ingredients = new List<Ingredient>();
+                    var ingredients = new List<IngredientDto>();
                     foreach (var ingredientName in model.Ingredients)
                     {
                         var ingredient = this._ingredientsService.FindByName(ingredientName);

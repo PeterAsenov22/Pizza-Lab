@@ -1,8 +1,10 @@
 ﻿namespace PizzaLab.Services.DataServices
 {
+    using AutoMapper;
     using Contracts;
     using Data.Common;
     using Data.Models;
+    using Models.Ingredients;
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
@@ -10,10 +12,14 @@
     public class IngredientsService : IIngredientsService
     {
         private readonly IRepository<Ingredient> _ingredientsRepository;
+        private readonly IMapper _mapper;
 
-        public IngredientsService(IRepository<Ingredient> ingredientsRepository)
+        public IngredientsService(
+            IRepository<Ingredient> ingredientsRepository,
+            IMapper mapper)
         {
             this._ingredientsRepository = ingredientsRepository;
+            this._mapper = mapper;
         }
 
         public bool Any()
@@ -21,10 +27,11 @@
             return this._ingredientsRepository.All().Any();
         }
 
-        public IEnumerable<Ingredient> All()
+        public IEnumerable<IngredientDto> All()
         {
             return this._ingredientsRepository
                 .All()
+                .Select(i => this._mapper.Map<IngredientDto>(i))
                 .OrderBy(i => i.Name);
         }
 
@@ -50,9 +57,12 @@
             await this._ingredientsRepository.SaveChangesAsync();
         }
 
-        public Ingredient FindByName(string ingredientName)
+        public IngredientDto FindByName(string ingredientName)
         {
-            return this._ingredientsRepository.All().FirstOrDefault(i => i.Name.ToLower() == ingredientName.ToLower());
+            return this._ingredientsRepository
+                .All()
+                .Select(i => this._mapper.Map<IngredientDto>(i))
+                .FirstOrDefault(i => i.Name.ToLower() == ingredientName.ToLower());
         }
     }
 }

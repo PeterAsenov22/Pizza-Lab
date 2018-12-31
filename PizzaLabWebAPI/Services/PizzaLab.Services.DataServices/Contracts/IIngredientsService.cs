@@ -1,6 +1,6 @@
 ﻿namespace PizzaLab.Services.DataServices.Contracts
 {
-    using Data.Models;
+    using Models.Ingredients;
     using System.Collections.Generic;
     using System.Threading.Tasks;
 
@@ -8,12 +8,12 @@
     {
         bool Any();
 
-        IEnumerable<Ingredient> All();
+        IEnumerable<IngredientDto> All();
 
         Task CreateAsync(string ingredientName);
 
         Task CreateRangeAsync(string[] ingredientsName);
 
-        Ingredient FindByName(string ingredientName);
+        IngredientDto FindByName(string ingredientName);
     }
 }
