@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PizzaLab.Data;
 
 namespace PizzaLab.Data.Migrations
 {
     [DbContext(typeof(PizzaLabDbContext))]
-    partial class PizzaLabDbContextModelSnapshot : ModelSnapshot
+    [Migration("20181230130013_PriceAddedToOrderProduct")]
+    partial class PriceAddedToOrderProduct
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -261,7 +263,9 @@ namespace PizzaLab.Data.Migrations
 
                     b.Property<decimal>("Price");
 
-                    b.Property<string>("ProductId");
+                    b.Property<int>("ProductId");
+
+                    b.Property<string>("ProductId1");
 
                     b.Property<int>("Quantity");
 
@@ -269,7 +273,7 @@ namespace PizzaLab.Data.Migrations
 
                     b.HasIndex("OrderId");
 
-                    b.HasIndex("ProductId");
+                    b.HasIndex("ProductId1");
 
                     b.ToTable("OrderProduct");
                 });
@@ -418,7 +422,7 @@ namespace PizzaLab.Data.Migrations
 
                     b.HasOne("PizzaLab.Data.Models.Product", "Product")
                         .WithMany()
-                        .HasForeignKey("ProductId");
+                        .HasForeignKey("ProductId1");
                 });
 
             modelBuilder.Entity("PizzaLab.Data.Models.Product", b =>
