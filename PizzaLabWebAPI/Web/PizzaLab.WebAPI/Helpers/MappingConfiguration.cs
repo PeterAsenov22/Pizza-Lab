@@ -1,14 +1,17 @@
 ﻿namespace PizzaLab.WebAPI.Helpers
 {
     using AutoMapper;
-    using Data.Models;
+    using Data.Models;  
     using Models.Account.FacebookModels;
     using Models.Account.InputModels;   
     using Models.Categories.ViewModels;
     using Models.Ingredients.ViewModels;
-    using Models.Reviews.ViewModels;
+    using Models.Orders.InputModels;
+    using Models.Orders.ViewModels;
     using Models.Products.ViewModels;
-    using System.Linq;  
+    using Models.Reviews.ViewModels;
+    using Services.DataServices.Models.Orders;
+    using System.Linq;   
 
     public class MappingConfiguration : Profile
     {
@@ -27,6 +30,20 @@
                     opt => opt.MapFrom(src => src.Likes.Select(ul => ul.ApplicationUser.UserName)));
             this.CreateMap<Category, CategoryViewModel>();
             this.CreateMap<Ingredient, IngredientViewModel>();
+            this.CreateMap<OrderProductInputModel, OrderProductDto>();
+            this.CreateMap<OrderProductDto, OrderProductViewModel>();
+            this.CreateMap<OrderProductDto, OrderProduct>()
+                .ForMember(dest => dest.ProductId, opt => opt.MapFrom(src => src.Id))
+                .ForMember(dest => dest.Id, opt => opt.Ignore());
+            this.CreateMap<OrderProduct, OrderProductDto>()
+                .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.ProductId))
+                .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Product.Name));
+            this.CreateMap<Order, OrderDto>()
+                .ForMember(dest => dest.CreatorEmail, opt => opt.MapFrom(src => src.Creator.Email))
+                .ForMember(dest => dest.Status, opt => opt.MapFrom(src => src.Status.ToString()))
+                .ForMember(dest => dest.OrderProducts, opt => opt.MapFrom(src => src.Products));
+            this.CreateMap<OrderDto, OrderViewModel>()
+                .ForMember(dest => dest.DateCreated, opt => opt.MapFrom(src => src.CreationDate));
         }
     }
 }
