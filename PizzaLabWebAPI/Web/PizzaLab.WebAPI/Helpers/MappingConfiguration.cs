@@ -14,7 +14,8 @@
     using Services.DataServices.Models.Ingredients;
     using Services.DataServices.Models.Orders;
     using Services.DataServices.Models.Products;
-    using System.Linq;   
+    using Services.DataServices.Models.Reviews;
+    using System.Linq;    
 
     public class MappingConfiguration : Profile
     {
@@ -23,9 +24,10 @@
             this.CreateMap<RegisterInputModel, ApplicationUser>();
             this.CreateMap<FacebookUserData, ApplicationUser>();
 
-            this.CreateMap<Review, ReviewViewModel>()
+            this.CreateMap<Review, ReviewDto>()
                 .ForMember(dest => dest.ReviewText, opt => opt.MapFrom(src => src.Text))
                 .ForMember(dest => dest.CreatorUsername, opt => opt.MapFrom(src => src.Creator.UserName));
+            this.CreateMap<ReviewDto, ReviewViewModel>();
 
             this.CreateMap<Product, ProductDto>()
                 .ForMember(dest => dest.Likes, opt => opt.MapFrom(src => src.Likes.Select(l => l.ApplicationUser)))
