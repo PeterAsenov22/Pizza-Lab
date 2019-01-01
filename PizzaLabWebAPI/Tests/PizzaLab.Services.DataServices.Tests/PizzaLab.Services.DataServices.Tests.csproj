@@ -18,6 +18,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\Data\PizzaLab.Data\PizzaLab.Data.csproj" />
     <ProjectReference Include="..\..\Services\PizzaLab.Services.DataServices\PizzaLab.Services.DataServices.csproj" />
+    <ProjectReference Include="..\..\Web\PizzaLab.WebAPI\PizzaLab.WebAPI.csproj" />
   </ItemGroup>
 
 </Project>
