@@ -10,10 +10,11 @@
     using Models.Orders.ViewModels;
     using Models.Products.ViewModels;
     using Models.Reviews.ViewModels;
+    using Services.DataServices.Models.Categories;
     using Services.DataServices.Models.Ingredients;
     using Services.DataServices.Models.Orders;
-    using Services.DataServices.Models.Categories;
-    using System.Linq;  
+    using Services.DataServices.Models.Products;
+    using System.Linq;   
 
     public class MappingConfiguration : Profile
     {
@@ -25,12 +26,23 @@
             this.CreateMap<Review, ReviewViewModel>()
                 .ForMember(dest => dest.ReviewText, opt => opt.MapFrom(src => src.Text))
                 .ForMember(dest => dest.CreatorUsername, opt => opt.MapFrom(src => src.Creator.UserName));
-            this.CreateMap<Product, ProductViewModel>()
+
+            this.CreateMap<Product, ProductDto>()
+                .ForMember(dest => dest.Likes, opt => opt.MapFrom(src => src.Likes.Select(l => l.ApplicationUser)))
+                .ForMember(dest => dest.Ingredients, opt => opt.MapFrom(src => src.Ingredients.Select(i => i.Ingredient)));
+            this.CreateMap<ProductDto, Product>()
+                .ForMember(dest => dest.Ingredients, opt => opt.MapFrom(src => src.Ingredients.Select(idto => new ProductsIngredients
+                {
+                    IngredientId = idto.Id
+                })))
+                .ForMember(dest => dest.Category, opt => opt.Ignore())
+                .ForMember(dest => dest.Likes, opt => opt.Ignore());
+            this.CreateMap<ProductDto, ProductViewModel>()
                 .ForMember(dest => dest.Category, opt => opt.MapFrom(src => src.Category.Name))
                 .ForMember(dest => dest.Ingredients,
-                    opt => opt.MapFrom(src => src.Ingredients.Select(i => i.Ingredient.Name)))
+                    opt => opt.MapFrom(src => src.Ingredients.Select(i => i.Name)))
                 .ForMember(dest => dest.Likes,
-                    opt => opt.MapFrom(src => src.Likes.Select(ul => ul.ApplicationUser.UserName)));
+                    opt => opt.MapFrom(src => src.Likes.Select(u => u.UserName)));
 
             this.CreateMap<Category, CategoryDto>();
             this.CreateMap<CategoryDto, CategoryViewModel>();

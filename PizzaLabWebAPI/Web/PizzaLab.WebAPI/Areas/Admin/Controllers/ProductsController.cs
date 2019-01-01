@@ -1,19 +1,19 @@
 ﻿namespace PizzaLab.WebAPI.Areas.Admin.Controllers
 {
     using AutoMapper;
-    using Data.Models;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
     using Models.Products.InputModels;
     using Services.DataServices.Contracts;
     using Services.DataServices.Models.Ingredients;
+    using Services.DataServices.Models.Products;
     using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
     using WebAPI.Controllers;
     using WebAPI.Models.Common;
-    using WebAPI.Models.Products.ViewModels;  
+    using WebAPI.Models.Products.ViewModels; 
 
     [Route("api/admin/[controller]")]
     public class ProductsController : ApiController
@@ -81,7 +81,7 @@
                         }
                     }
 
-                    var product = new Product
+                    var productDto = new ProductDto
                     {
                         Name = model.Name,
                         CategoryId = productCategory.Id,
@@ -89,19 +89,20 @@
                         Image = model.Image,
                         Weight = model.Weight,
                         Price = model.Price,
-                        Ingredients = ingredients.Select(i => new ProductsIngredients
+                        Ingredients = ingredients.Select(i => new IngredientDto
                         {
-                            IngredientId = i.Id
+                            Id = i.Id,
+                            Name = i.Name                       
                         }).ToList()
                     };
 
                     try
                     {
-                        await this._productsService.CreateAsync(product);
+                        var createdProductDto = await this._productsService.CreateAsync(productDto);
 
                         return new SuccessViewModel<ProductViewModel>
                         {
-                            Data = this._mapper.Map<ProductViewModel>(product),
+                            Data = this._mapper.Map<ProductViewModel>(createdProductDto),
                             Message = "Product added successfully."
                         };
                     }
@@ -143,11 +144,11 @@
                 var productCategory = _categoriesService.FindByName(model.Category);
                 if (productCategory != null)
                 {
-                    var product = this._productsService
+                    var productDto = this._productsService
                         .All()
                         .First(p => p.Id == productId);
 
-                    if (product.Name != model.Name && _productsService.All().Any(p => p.Name == model.Name))
+                    if (productDto.Name != model.Name && _productsService.All().Any(p => p.Name == model.Name))
                     {
                         return BadRequest(new BadRequestViewModel
                         {
@@ -175,24 +176,25 @@
                     await this._productsIngredientsService
                         .DeleteProductIngredientsAsync(productId);
 
-                    product.Name = model.Name;
-                    product.CategoryId = productCategory.Id;
-                    product.Description = model.Description;
-                    product.Image = model.Image;
-                    product.Weight = model.Weight;
-                    product.Price = model.Price;
-                    product.Ingredients = ingredients.Select(i => new ProductsIngredients
+                    productDto.Name = model.Name;
+                    productDto.CategoryId = productCategory.Id;
+                    productDto.Description = model.Description;
+                    productDto.Image = model.Image;
+                    productDto.Weight = model.Weight;
+                    productDto.Price = model.Price;
+                    productDto.Ingredients = ingredients.Select(i => new IngredientDto
                     {
-                        IngredientId = i.Id
+                        Id = i.Id,
+                        Name = i.Name
                     }).ToList();
 
                     try
                     {
-                        await this._productsService.EditAsync(product);
+                        var editedProductDto = await this._productsService.EditAsync(productDto);
 
                         return new SuccessViewModel<ProductViewModel>
                         {
-                            Data = this._mapper.Map<ProductViewModel>(product),
+                            Data = this._mapper.Map<ProductViewModel>(editedProductDto),
                             Message = "Product edited successfully."
                         };
                     }

@@ -1,9 +1,10 @@
 ﻿namespace PizzaLab.WebAPI.Middlewares
 {
-    using Data.Models;
     using Microsoft.AspNetCore.Http;
     using Microsoft.Extensions.DependencyInjection;
     using Services.DataServices.Contracts;
+    using Services.DataServices.Models.Ingredients;
+    using Services.DataServices.Models.Products;
     using System;
     using System.Collections.Generic;
     using System.Linq;
@@ -26,10 +27,10 @@
             {
                 var ingredientsService = provider.GetService<IIngredientsService>();
                 var categoriesService = provider.GetService<ICategoriesService>();
-                var products = new List<Product>();
+                var products = new List<ProductDto>();
 
                 var margheritaIngredients = new string[] { "olive oil", "yellow cheese", "tomato sauce" };
-                var margherita = new Product
+                var margherita = new ProductDto
                 {
                     Name = "Margherita",
                     Description = "Pizza Margherita is a typical Neapolitan pizza, made with San Marzano tomatoes, mozzarella fior di latte, fresh basil, salt and extra-virgin olive oil.",
@@ -40,13 +41,13 @@
                     Ingredients = ingredientsService
                         .All()
                         .Where(i => margheritaIngredients.Contains(i.Name))
-                        .Select(i => new ProductsIngredients {IngredientId = i.Id})
+                        .Select(i => new IngredientDto { Id = i.Id, Name = i.Name})
                         .ToList()
                 };
                 products.Add(margherita);
 
                 var pepperoniIngredients = new string[] { "olive oil", "pepperoni salami", "yellow cheese", "tomato sauce", "oregano" };
-                var pepperoni = new Product
+                var pepperoni = new ProductDto
                 {
                     Name = "Pepperoni",
                     Description = "Pepperoni is an American variety of salami, made from cured pork and beef mixed together and seasoned with paprika or other chili pepper.",
@@ -57,14 +58,14 @@
                     Ingredients = ingredientsService
                         .All()
                         .Where(i => pepperoniIngredients.Contains(i.Name))
-                        .Select(i => new ProductsIngredients { IngredientId = i.Id })
+                        .Select(i => new IngredientDto { Id = i.Id, Name = i.Name})
                         .ToList()
                 };
                 products.Add(pepperoni);
 
                 var calzoneIngredients = new string[] { "ham", "traditional bulgarian flat sausage called lukanka",
                     "mushrooms", "yellow cheese", "smoked cheese", "mozzarella", "tomato sauce" };
-                var calzone = new Product
+                var calzone = new ProductDto
                 {
                     Name = "Calzone",
                     Description = "A calzone is an Italian oven-baked folded pizza that originated in Naples. A typical calzone is made from salted bread dough, stuffed with salami, ham, vegetables, mozzarella, Parmesan and an egg.",
@@ -75,14 +76,14 @@
                     Ingredients = ingredientsService
                         .All()
                         .Where(i => calzoneIngredients.Contains(i.Name))
-                        .Select(i => new ProductsIngredients { IngredientId = i.Id })
+                        .Select(i => new IngredientDto { Id = i.Id, Name = i.Name })
                         .ToList()
                 };
                 products.Add(calzone);
 
                 var polloIngredients = new string[] { "chicken roll", "corn",
                     "red peppers", "yellow cheese", "smoked cheese", "tomato sauce" };
-                var pollo = new Product
+                var pollo = new ProductDto
                 {
                     Name = "Pollo",
                     Description = "Pollo might be your choice when you are in the mood for something healthy. Tender grilled chicken, creamy feta, roasted red peppers and corn are generously piled on top of our famous tomato sauce.",
@@ -93,14 +94,14 @@
                     Ingredients = ingredientsService
                         .All()
                         .Where(i => polloIngredients.Contains(i.Name))
-                        .Select(i => new ProductsIngredients { IngredientId = i.Id })
+                        .Select(i => new IngredientDto { Id = i.Id, Name = i.Name })
                         .ToList()
                 };
                 products.Add(pollo);
 
                 var diabloIngredients = new string[] { "ham", "mushrooms",
                     "hot peppers", "yellow cheese", "tomato sauce", "olive oil" };
-                var diablo = new Product
+                var diablo = new ProductDto
                 {
                     Name = "Diablo",
                     Description = "Pizza diavola means the devils pizza and is quite a spicy little devil and one of my favourite pizzas. If you like spicy hot and chilli flavours you will enjoy this pizza.",
@@ -111,14 +112,14 @@
                     Ingredients = ingredientsService
                         .All()
                         .Where(i => diabloIngredients.Contains(i.Name))
-                        .Select(i => new ProductsIngredients { IngredientId = i.Id })
+                        .Select(i => new IngredientDto { Id = i.Id, Name = i.Name })
                         .ToList()
                 };
                 products.Add(diablo);
 
                 var californiaIngredients = new string[] { "chicken", "avocado",
                     "olives", "yellow cheese", "pineapple", "tomato sauce" };
-                var california = new Product
+                var california = new ProductDto
                 {
                     Name = "California",
                     Description = "California pizza is a style of single-serving pizza that combines New York and Italian thin crust with toppings from the California cuisine cooking style.",
@@ -129,14 +130,14 @@
                     Ingredients = ingredientsService
                         .All()
                         .Where(i => californiaIngredients.Contains(i.Name))
-                        .Select(i => new ProductsIngredients { IngredientId = i.Id })
+                        .Select(i => new IngredientDto { Id = i.Id, Name = i.Name })
                         .ToList()
                 };
                 products.Add(california);
 
                 var fourCheesesIngredients = new string[] { "white bulgarian cheese", "blue cheese",
                     "smoked cheese", "yellow cheese", "tomato sauce" };
-                var fourCheeses = new Product
+                var fourCheeses = new ProductDto
                 {
                     Name = "Four Cheeses",
                     Description = "Pizza cheese encompasses several varieties and types of cheeses and dairy products. These include processed and modified cheese such as mozzarella-like processed cheeses and mozzarella variants.",
@@ -147,14 +148,14 @@
                     Ingredients = ingredientsService
                         .All()
                         .Where(i => fourCheesesIngredients.Contains(i.Name))
-                        .Select(i => new ProductsIngredients { IngredientId = i.Id })
+                        .Select(i => new IngredientDto { Id = i.Id, Name = i.Name })
                         .ToList()
                 };
                 products.Add(fourCheeses);
 
                 var tunaIngredients = new string[] { "philadelphia", "tuna fish",
                     "white pepper", "yellow cheese", "cherry tomatoes", "basil chips", "olives" };
-                var tuna = new Product
+                var tuna = new ProductDto
                 {
                     Name = "Tuna",
                     Description = "If you like tuna you should try this tuna and red onion pizza. Thin crust with tuna, red onion flavor, black olives and fresh basil leaves makes it one delightful meal.",
@@ -165,14 +166,14 @@
                     Ingredients = ingredientsService
                         .All()
                         .Where(i => tunaIngredients.Contains(i.Name))
-                        .Select(i => new ProductsIngredients { IngredientId = i.Id })
+                        .Select(i => new IngredientDto { Id = i.Id, Name = i.Name })
                         .ToList()
                 };
                 products.Add(tuna);
 
                 var quattroStagioniIngredients = new string[] { "tomato sauce", "chorizo",
                     "proschuitto", "chicken roll", "bacon", "corn", "eggs", "yellow cheese", "red onion" };
-                var quattroStagioni = new Product
+                var quattroStagioni = new ProductDto
                 {
                     Name = "Quattro Stagioni",
                     Description = "Pizza quattro stagioni is a variety of pizza in Italian cuisine that is prepared in four sections with diverse ingredients, with each section representing one season of the year.",
@@ -183,13 +184,13 @@
                     Ingredients = ingredientsService
                         .All()
                         .Where(i => quattroStagioniIngredients.Contains(i.Name))
-                        .Select(i => new ProductsIngredients { IngredientId = i.Id })
+                        .Select(i => new IngredientDto { Id = i.Id, Name = i.Name })
                         .ToList()
                 };
                 products.Add(quattroStagioni);
 
                 var ratatouilleIngredients = new string[] { "tomato sauce", "red onion", "red peppers", "olives", "yellow cheese" };
-                var ratatouille = new Product
+                var ratatouille = new ProductDto
                 {
                     Name = "Ratatouille",
                     Description = "The ratatouille pizza is packed full of summer vegetables. We piled them high on a whole wheat pizza crust and sprinkled it all with cheese.",
@@ -200,13 +201,13 @@
                     Ingredients = ingredientsService
                         .All()
                         .Where(i => ratatouilleIngredients.Contains(i.Name))
-                        .Select(i => new ProductsIngredients { IngredientId = i.Id })
+                        .Select(i => new IngredientDto { Id = i.Id, Name = i.Name })
                         .ToList()
                 };
                 products.Add(ratatouille);
 
                 var doubleEggsIngredients = new string[] { "tomato sauce", "red onion", "red peppers", "olives", "yellow cheese" };
-                var doubleEggs = new Product
+                var doubleEggs = new ProductDto
                 {
                     Name = "Double Eggs",
                     Description = "Switch it up! Have pizza at breakfast. Ripe tomatoes, fresh parsley, ham, and double eggs make for a filling start to your day.",
@@ -217,7 +218,7 @@
                     Ingredients = ingredientsService
                         .All()
                         .Where(i => doubleEggsIngredients.Contains(i.Name))
-                        .Select(i => new ProductsIngredients { IngredientId = i.Id })
+                        .Select(i => new IngredientDto { Id = i.Id, Name = i.Name })
                         .ToList()
                 };
                 products.Add(doubleEggs);

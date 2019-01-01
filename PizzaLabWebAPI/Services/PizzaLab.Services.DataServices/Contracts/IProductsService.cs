@@ -1,22 +1,22 @@
 ﻿namespace PizzaLab.Services.DataServices.Contracts
 {
-    using Data.Models;
+    using Models.Products;
     using System.Collections.Generic;
-    using System.Threading.Tasks;    
+    using System.Threading.Tasks;
 
     public interface IProductsService
     {
-        IEnumerable<Product> All();
+        IEnumerable<ProductDto> All();
 
         bool Any();
 
-        Task CreateAsync(Product product);
+        Task<ProductDto> CreateAsync(ProductDto product);
 
-        Task CreateRangeAsync(IEnumerable<Product> products);
+        Task CreateRangeAsync(IEnumerable<ProductDto> products);
 
         Task DeleteAsync(string productId);
 
-        Task EditAsync(Product product);
+        Task<ProductDto> EditAsync(ProductDto product);
 
         bool Exists(string productId);
     }

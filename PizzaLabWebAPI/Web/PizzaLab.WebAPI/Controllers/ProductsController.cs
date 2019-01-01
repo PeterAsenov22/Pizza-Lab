@@ -66,7 +66,7 @@
                 var user = await this._userManager.FindByNameAsync(this.User.Identity.Name);
                 var product = this._productsService.All().First(p => p.Id == productId);
 
-                if (product.Likes.Any(pl => pl.ApplicationUserId == user.Id))
+                if (product.Likes.Any(u => u.Id == user.Id))
                 {
                     return BadRequest(new BadRequestViewModel
                     {
