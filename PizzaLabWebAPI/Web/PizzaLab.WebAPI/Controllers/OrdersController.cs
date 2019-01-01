@@ -65,7 +65,7 @@
                 return new SuccessViewModel<OrderViewModel>
                 {
                     Data = this._mapper.Map<OrderViewModel>(orderDto),
-                    Message = "Order created successfully."
+                    Message = "Your order was processed successfully."
                 };
             }
             catch (Exception)
