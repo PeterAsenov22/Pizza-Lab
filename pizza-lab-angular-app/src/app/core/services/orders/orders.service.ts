@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http'
 import { Injectable } from '@angular/core'
 import { Router } from '@angular/router'
 import { Store, select } from '@ngrx/store'
+import { ToastrService } from 'ngx-toastr'
 
 import { AppState } from '../../store/app.state'
 import { ClearCart } from '../../store/cart/cart.actions'
@@ -11,12 +12,12 @@ import { OrderProductModel } from '../../../components/orders/models/OrderProduc
 import { NgxSpinnerService } from 'ngx-spinner'
 import { ResponseDataModel } from '../../models/ResponseDataModel'
 
-const baseUrl = 'http://localhost:5000/orders/'
-const userOrdersUrl = 'user'
-const pendingOrdersUrl = 'pending'
-const approvedOrdersUrl = 'approved'
-const submitOrderUrl = 'submit'
-const approveOrderUrl = 'approve/'
+const baseUrl = 'https://localhost:44393/api/'
+const userOrdersUrl = 'orders/my'
+const submitOrderUrl = 'orders/submit'
+const approvedOrdersUrl = 'admin/orders/approved'
+const pendingOrdersUrl = 'admin/orders/pending'
+const approveOrderUrl = 'admin/orders/approve/'
 
 @Injectable()
 export class OrdersService {
@@ -26,7 +27,8 @@ export class OrdersService {
     private http: HttpClient,
     private store: Store<AppState>,
     private spinner: NgxSpinnerService,
-    private router: Router ) {
+    private router: Router,
+    private toastr: ToastrService ) {
       this.store
         .pipe(select(state => state.http.ordersRequestMade))
         .subscribe(data => {
@@ -71,12 +73,13 @@ export class OrdersService {
   submitNewOrder(products: OrderProductModel[]) {
     this.spinner.show()
     this.http
-      .post(`${baseUrl}${submitOrderUrl}`, products)
+      .post(`${baseUrl}${submitOrderUrl}`, {orderProducts: products})
       .subscribe((res: ResponseDataModel) => {
         this.store.dispatch(new SubmitOrder(res.data))
         this.store.dispatch(new ClearCart())
         this.spinner.hide()
         this.router.navigate(['/orders/my'])
+        this.toastr.success(res.message)
       })
   }
 

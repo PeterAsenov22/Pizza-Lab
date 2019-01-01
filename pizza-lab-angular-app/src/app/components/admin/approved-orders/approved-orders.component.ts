@@ -36,7 +36,8 @@ export class ApprovedOrdersComponent extends BaseComponent implements OnInit {
       .pipe(select(state => state))
       .subscribe(state => {
         if (state.http.ordersRequestMade) {
-          this.approvedOrders = state.orders.approvedOrders.sort((a: OrderModel, b: OrderModel) => +new Date(b.date) - +new Date(a.date))
+          this.approvedOrders = state.orders
+            .approvedOrders.sort((a: OrderModel, b: OrderModel) => +new Date(b.dateCreated) - +new Date(a.dateCreated))
         }
       })
 

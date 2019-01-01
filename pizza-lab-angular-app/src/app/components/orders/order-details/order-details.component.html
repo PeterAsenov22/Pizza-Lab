@@ -8,15 +8,15 @@
       </p>
       <p>
         <span class="font-weight-bold lead text-warning">Products In Order:</span>
-        <span class="ml-2 lead">{{order.products.length}}</span>
+        <span class="ml-2 lead">{{order.orderProducts.length}}</span>
       </p>
       <p>
         <span class="font-weight-bold lead text-warning">Date:</span>
-        <span class="ml-2 lead">{{toLocaleString(order.date)}}</span>
+        <span class="ml-2 lead">{{toLocaleString(order.dateCreated)}}</span>
       </p>
       <p>
         <span class="font-weight-bold lead text-warning">Total Price:</span>
-        <span class="ml-2 lead">${{getTotalSum(order.products).toFixed(2)}}</span>
+        <span class="ml-2 lead">${{getTotalSum(order.orderProducts).toFixed(2)}}</span>
       </p>
       <p>
         <span class="font-weight-bold lead text-warning">Status:</span>
@@ -39,7 +39,7 @@
               </tr>
             </thead>
             <tbody>
-              <tr *ngFor="let pr of order.products; let i = index">
+              <tr *ngFor="let pr of order.orderProducts; let i = index">
                 <th>#{{i + 1}}</th>
                 <td>{{pr.name}}</td>
                 <td>$ {{pr.price.toFixed(2)}}</td>

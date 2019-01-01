@@ -37,7 +37,8 @@ export class PendingOrdersComponent extends BaseComponent implements OnInit, OnD
       .pipe(select(state => state))
       .subscribe(state => {
         if (state.http.ordersRequestMade) {
-          this.pendingOrders = state.orders.pendingOrders.sort((a: OrderModel, b: OrderModel) => +new Date(b.date) - +new Date(a.date))
+          this.pendingOrders = state.orders
+            .pendingOrders.sort((a: OrderModel, b: OrderModel) => +new Date(b.dateCreated) - +new Date(a.dateCreated))
         }
       })
 

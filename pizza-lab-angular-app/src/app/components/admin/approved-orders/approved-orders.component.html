@@ -20,8 +20,8 @@
                   currentPage: currentPage
                 }; trackBy: trackByIds; let i = index">
                 <td>{{i + 1 + (currentPage-1)*5}}</td>
-                <td>{{toLocaleString(o.date)}}</td>
-                <td>$ {{getTotalSum(o.products).toFixed(2)}}</td>
+                <td>{{toLocaleString(o.dateCreated)}}</td>
+                <td>$ {{getTotalSum(o.orderProducts).toFixed(2)}}</td>
                 <td>
                   <a routerLink="/orders/details/{{o.id}}" class="btn btn-outline-warning btn-sm">View</a>
                 </td>

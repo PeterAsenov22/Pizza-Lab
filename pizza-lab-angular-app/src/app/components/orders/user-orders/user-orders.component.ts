@@ -34,7 +34,8 @@ export class UserOrdersComponent extends BaseComponent implements OnInit {
       .pipe(select(state => state))
       .subscribe(state => {
         if (state.http.ordersRequestMade) {
-          this.orders = state.orders.userOrders.sort((a: OrderModel, b: OrderModel) => +new Date(b.date) - +new Date(a.date))
+          this.orders = state.orders
+            .userOrders.sort((a: OrderModel, b: OrderModel) => +new Date(b.dateCreated) - +new Date(a.dateCreated))
         }
       })
 

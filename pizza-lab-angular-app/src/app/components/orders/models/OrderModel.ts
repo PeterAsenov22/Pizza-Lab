@@ -2,9 +2,9 @@ import { OrderProductModel } from './OrderProductModel'
 
 export class OrderModel {
   id: string
-  creator: string
+  creatorId: string
   creatorEmail: string
-  products: OrderProductModel[]
-  date: Date
+  orderProducts: OrderProductModel[]
+  dateCreated: Date
   status: string
 }
