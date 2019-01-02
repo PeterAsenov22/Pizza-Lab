@@ -17,5 +17,7 @@
         IEnumerable<OrderDto> GetPendingOrders();
 
         IEnumerable<OrderDto> GetUserOrders(string userId);
+
+        Task DeleteProductOrders(string productId);
     }
 }

@@ -15,13 +15,16 @@
     public class OrdersService : IOrdersService
     {
         private readonly IRepository<Order> _ordersRepository;
+        private readonly IRepository<OrderProduct> _orderProductRepository;
         private readonly IMapper _mapper;
 
         public OrdersService(
             IRepository<Order> ordersRepository,
+            IRepository<OrderProduct> orderProductRepository,
             IMapper mapper)
         {
             this._ordersRepository = ordersRepository;
+            this._orderProductRepository = orderProductRepository;
             this._mapper = mapper;
         }
 
@@ -97,6 +100,26 @@
                 .ThenInclude(p => p.Product)
                 .Where(o => o.CreatorId == userId)
                 .Select(o => this._mapper.Map<OrderDto>(o));
+        }
+
+        public async Task DeleteProductOrders(string productId)
+        {
+            var orders = this._ordersRepository
+                .All()
+                .Where(o => o.Products.Any(p => p.ProductId == productId))
+                .ToList();
+
+            var orderProducts = this._orderProductRepository
+                .All()
+                .Where(op => op.ProductId == productId)
+                .ToList();
+
+            this._orderProductRepository.DeleteRange(orderProducts);
+            await this._orderProductRepository.SaveChangesAsync();
+            
+
+            this._ordersRepository.DeleteRange(orders);
+            await this._ordersRepository.SaveChangesAsync();
         }
     }
 }
