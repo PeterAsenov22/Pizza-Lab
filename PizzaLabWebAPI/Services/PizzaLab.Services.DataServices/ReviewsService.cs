@@ -63,5 +63,32 @@
                 await this._reviewsRepository.SaveChangesAsync();
             }          
         }
+
+        public async Task DeleteReviewAsync(string reviewId)
+        {
+            var review = this._reviewsRepository
+                .All()
+                .First(r => r.Id == reviewId);
+
+            this._reviewsRepository.Delete(review);
+            await this._reviewsRepository.SaveChangesAsync();
+        }
+
+        public bool Exists(string reviewId)
+        {
+            return this._reviewsRepository
+                .All()
+                .Any(r => r.Id == reviewId);
+        }
+
+        public string FindReviewCreatorById(string reviewId)
+        {
+            return this._reviewsRepository
+                .All()
+                .Include(r => r.Creator)
+                .First(r => r.Id == reviewId)
+                .Creator
+                .UserName;
+        }
     }
 }

@@ -11,5 +11,11 @@
         IEnumerable<ReviewDto> GetProductReviews(string productId);
 
         Task DeleteProductReviewsAsync(string productId);
+
+        Task DeleteReviewAsync(string reviewId);
+
+        bool Exists(string reviewId);
+
+        string FindReviewCreatorById(string reviewId);
     }
 }

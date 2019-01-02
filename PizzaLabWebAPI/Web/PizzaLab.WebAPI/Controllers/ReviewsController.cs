@@ -88,5 +88,44 @@
                 });
             }
         }
+
+        [HttpDelete("{reviewId}")]
+        [ProducesDefaultResponseType]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        public async Task<ActionResult> Delete(string reviewId)
+        {
+            if (!this._reviewsService.Exists(reviewId))
+            {
+                return BadRequest(new BadRequestViewModel
+                {
+                    Message = $"Review with id {reviewId} was not found."
+                });
+            }
+
+            var reviewCreatorName = this._reviewsService.FindReviewCreatorById(reviewId);
+            if (!this.User.IsInRole("Administrator") && this.User.Identity.Name != reviewCreatorName)
+            {
+                return Unauthorized();
+            }
+
+            try
+            {
+                await this._reviewsService.DeleteReviewAsync(reviewId);
+
+                return Ok(new
+                {
+                    Message = "Review deleted successfully."
+                });
+            }
+            catch (Exception)
+            {
+                return BadRequest(new BadRequestViewModel
+                {
+                    Message = "Something went wrong."
+                });
+            }          
+        }
     }
 }
