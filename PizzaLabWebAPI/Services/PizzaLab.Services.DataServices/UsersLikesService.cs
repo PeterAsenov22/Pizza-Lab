@@ -15,7 +15,7 @@
             this._usersLikesRepository = usersLikesRepository;
         }
 
-        public async Task CreateUserLike(string productId, string userId)
+        public async Task CreateUserLikeAsync(string productId, string userId)
         {
             await this._usersLikesRepository.AddAsync(new UsersLikes
             {

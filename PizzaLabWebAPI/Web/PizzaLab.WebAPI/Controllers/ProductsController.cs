@@ -74,7 +74,7 @@
                     });
                 }
 
-                await this._usersLikesService.CreateUserLike(productId, user.Id);
+                await this._usersLikesService.CreateUserLikeAsync(productId, user.Id);
 
                 return Ok();
             }

@@ -4,7 +4,7 @@
 
     public interface IUsersLikesService
     {
-        Task CreateUserLike(string productId, string userId);
+        Task CreateUserLikeAsync(string productId, string userId);
 
         Task DeleteProductLikesAsync(string productId);
 
