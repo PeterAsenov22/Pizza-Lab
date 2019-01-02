@@ -23,7 +23,12 @@
       <div class="card-body">
         <blockquote class="card-blockquote">
           <p class="h6">{{r.reviewText}}</p>
-          <button class="btn btn-danger float-right btn-sm custom-button" *ngIf="authService.isAdmin() || r.creatorUsername === authService.getUsername()"><i class="fa fa-trash"></i></button>
+          <button 
+            class="btn btn-danger float-right btn-sm custom-button" 
+            *ngIf="authService.isAdmin() || r.creatorUsername === authService.getUsername()"
+            (click)="openDeleteReviewModal(r.id)">
+            <i class="fa fa-trash"></i>
+          </button>
           <button class="btn btn-warning float-right btn-sm custom-button" *ngIf="authService.isAdmin() || r.creatorUsername === authService.getUsername()"><i class="fa fa-edit"></i></button>
           <footer class="review-footer">
             <cite class="text-capitalize footer-color">"{{r.creatorUsername}}"</cite>

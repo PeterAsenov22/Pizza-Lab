@@ -8,6 +8,7 @@ import { SharedModule } from '../shared/shared.module'
 
 import { productComponents } from '.'
 import { ProductDeleteModalComponent } from './product-delete-modal/product-delete-modal.component'
+import { ReviewDeleteModalComponent } from './review-delete-modal/review-delete-modal.component'
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { ProductDeleteModalComponent } from './product-delete-modal/product-dele
     ...productComponents
   ],
   entryComponents: [
-    ProductDeleteModalComponent
+    ProductDeleteModalComponent,
+    ReviewDeleteModalComponent
   ]
 })
 export class ProductsModule { }

@@ -4,7 +4,7 @@ import { NgxSpinnerService } from 'ngx-spinner'
 import { Store } from '@ngrx/store'
 import { ToastrService } from 'ngx-toastr'
 
-import { AddProductReview, GetProductReviews } from '../../store/products/products.actions'
+import { AddProductReview, GetProductReviews, DeleteProductReview } from '../../store/products/products.actions'
 import { AppState } from '../../store/app.state'
 import { ResponseDataModel } from '../../models/ResponseDataModel'
 import { ReviewModel } from '../../../components/products/models/ReviewModel'
@@ -36,6 +36,18 @@ export class ReviewsService {
       .subscribe(reviews => {
         this.store.dispatch(new GetProductReviews(reviews, productId))
         this.spinner.hide()
+      })
+  }
+
+  deleteReview(reviewId: string, productId: string, activeModal) {
+    this.spinner.show()
+    this.http
+      .delete(`${baseUrl}/${reviewId}`)
+      .subscribe((res: ResponseDataModel) => {
+        this.store.dispatch(new DeleteProductReview(reviewId, productId))
+        this.spinner.hide()
+        activeModal.close()
+        this.toastr.success(res.message)
       })
   }
 }
