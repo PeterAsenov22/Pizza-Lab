@@ -16,7 +16,7 @@
         public List<string> Ingredients { get; set; }
 
         [Required]
-        [StringLength(120, MinimumLength = 10, ErrorMessage = "Description should be at least 10 characters long and not more than 120.")]
+        [StringLength(220, MinimumLength = 10, ErrorMessage = "Description should be at least 10 characters long and not more than 220.")]
         public string Description { get; set; }
 
         [Required]
