@@ -1,5 +1,5 @@
-import { GET_ALL,
-  ADD_REVIEW, LIKE_PRODUCT, UNLIKE_PRODUCT, CREATE_PRODUCT, DELETE_PRODUCT, EDIT_PRODUCT, GET_PRODUCT_REVIEWS } from './products.actions'
+import { GET_ALL, ADD_REVIEW,
+  LIKE_PRODUCT, UNLIKE_PRODUCT, CREATE_PRODUCT, DELETE_PRODUCT, DELETE_REVIEW, EDIT_PRODUCT, GET_PRODUCT_REVIEWS } from './products.actions'
 import { ProductModel } from '../../../components/products/models/ProductModel'
 import { ProductsState } from './products.state'
 import { ReviewModel } from '../../../components/products/models/ReviewModel'
@@ -56,6 +56,18 @@ function addProductReview(state: ProductsState, review: ReviewModel, productId: 
   })
 }
 
+function deleteProductReview(state: ProductsState, reviewId: string, productId: string) {
+  const allProductsCopy = state.all.slice()
+  const product = allProductsCopy.find(p => p.id === productId)
+  if (product) {
+    product.reviews = product.reviews.filter(r => r.id !== reviewId)
+  }
+
+  return Object.assign({}, state, {
+    all: allProductsCopy
+  })
+}
+
 function likeProduct(state: ProductsState, id: string, username: string) {
   const allProductsCopy = state.all.slice()
   const product = allProductsCopy.find(p => p.id === id)
@@ -90,6 +102,8 @@ export function productsReducer (state: ProductsState = initialState, action) {
       return editProduct(state, action.payload)
     case DELETE_PRODUCT:
       return removeProduct(state, action.id)
+    case DELETE_REVIEW:
+      return deleteProductReview(state, action.reviewId, action.productId)
     case GET_PRODUCT_REVIEWS:
       return getProductReviews(state, action.reviews, action.productId)
     case ADD_REVIEW:

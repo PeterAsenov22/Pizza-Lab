@@ -8,6 +8,7 @@ export const EDIT_PRODUCT = '[PRODUCTS] EDIT'
 export const DELETE_PRODUCT = '[PRODUCTS] DELETE'
 export const GET_PRODUCT_REVIEWS = '[PRODUCTS] GET_PRODUCT_REVIEWS'
 export const ADD_REVIEW = '[PRODUCTS] ADD_REVIEW'
+export const DELETE_REVIEW = '[PRODUCTS] DELETE_REVIEW'
 export const LIKE_PRODUCT = '[PRODUCTS] LIKE'
 export const UNLIKE_PRODUCT = '[PRODUCTS] UNLIKE'
 
@@ -45,6 +46,12 @@ export class AddProductReview implements Action {
   readonly type: string = ADD_REVIEW
 
   constructor (public review: ReviewModel, public productId: string) { }
+}
+
+export class DeleteProductReview implements Action {
+  readonly type: string = DELETE_REVIEW
+
+  constructor (public reviewId: string, public productId: string) { }
 }
 
 export class LikeProduct implements Action {
