@@ -29,7 +29,6 @@
             (click)="openDeleteReviewModal(r.id)">
             <i class="fa fa-trash"></i>
           </button>
-          <button class="btn btn-warning float-right btn-sm custom-button" *ngIf="authService.isAdmin() || r.creatorUsername === authService.getUsername()"><i class="fa fa-edit"></i></button>
           <footer class="review-footer">
             <cite class="text-capitalize footer-color">"{{r.creatorUsername}}"</cite>
             <span class="review-date footer-color">
