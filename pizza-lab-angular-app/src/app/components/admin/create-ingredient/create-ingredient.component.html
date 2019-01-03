@@ -1,0 +1,40 @@
+<div class="container">
+  <div class="row space-top">
+    <div class="col-md-12">
+      <h1 class="title">Add Ingredient</h1>
+    </div>
+  </div>
+  <form [formGroup]="createIngredientForm" (ngSubmit)="create()">
+    <div class="row space-top">
+      <div class="col-md-12">
+        <div class="form-group">
+          <label class="form-control-label" for="name">Name</label>
+          <input
+            type="text"
+            class="form-control" 
+            id="name" 
+            formControlName="name"
+            [ngClass]="{ 'is-invalid': name.touched && name.errors }" />
+          <div *ngIf="name.errors" class="invalid-feedback">
+            <div *ngIf="name.errors.required">
+              Name is required.
+            </div>
+            <div *ngIf="name.errors.minlength">
+              Name must be at least 3 characters long.
+            </div>
+            <div *ngIf="name.errors.maxlength">
+              Name must not be more than 20 characters long.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="title">
+        <input type="submit" class="btn btn-warning" value="Add" [disabled]="createIngredientForm.invalid" />
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
