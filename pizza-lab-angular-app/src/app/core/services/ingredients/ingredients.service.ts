@@ -1,13 +1,17 @@
 import { HttpClient } from '@angular/common/http'
 import { Injectable } from '@angular/core'
 import { NgxSpinnerService } from 'ngx-spinner'
+import { Router } from '@angular/router'
 import { Store } from '@ngrx/store'
+import { ToastrService } from 'ngx-toastr'
 
+import { AddIngredient, GetAllIngredients } from '../../../core/store/ingredients/ingredients.actions'
 import { AppState } from '../../store/app.state'
 import { IngredientModel } from '../../../components/admin/models/IngredientModel'
-import { GetAllIngredients } from '../../../core/store/ingredients/ingredients.actions'
+import { ResponseDataModel } from '../../models/ResponseDataModel'
 
 const ingredientsUrl = 'https://localhost:44393/api/ingredients'
+const ingredientsAdminUrl = 'https://localhost:44393/api/admin/ingredients'
 const tenMinutes = 1000 * 60 * 10
 
 @Injectable()
@@ -17,8 +21,10 @@ export class IngredientsService {
 
   constructor (
     private http: HttpClient,
+    private router: Router,
     private store: Store<AppState>,
-    private spinner: NgxSpinnerService) { }
+    private spinner: NgxSpinnerService,
+    private toastr: ToastrService) { }
 
   getAllIngredients() {
     if (this.ingredientsCached && (new Date().getTime() - this.cacheTime) < tenMinutes) {
@@ -33,6 +39,20 @@ export class IngredientsService {
       .subscribe(ingredients => {
         this.store.dispatch(new GetAllIngredients(ingredients))
         this.spinner.hide()
+      })
+  }
+
+  createIngredient(model: IngredientModel) {
+    this.spinner.show()
+    this.http
+      .post(ingredientsAdminUrl, model)
+      .subscribe((res: ResponseDataModel) => {
+        const ingredient: IngredientModel = res.data
+
+        this.store.dispatch(new AddIngredient(ingredient))
+        this.spinner.hide()
+        this.router.navigate(['/menu'])
+        this.toastr.success(res.message)
       })
   }
 }
