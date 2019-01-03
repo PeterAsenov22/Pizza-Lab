@@ -43,7 +43,7 @@
             var order = new Order
             {
                 CreatorId = userId,
-                CreationDate = DateTime.Now,
+                CreationDate = DateTime.UtcNow,
                 Status = OrderStatus.Pending,
                 Products = orderProducts
                     .Select(op => this._mapper.Map<OrderProduct>(op))
@@ -104,22 +104,14 @@
 
         public async Task DeleteProductOrders(string productId)
         {
-            var orders = this._ordersRepository
-                .All()
-                .Where(o => o.Products.Any(p => p.ProductId == productId))
-                .ToList();
-
             var orderProducts = this._orderProductRepository
                 .All()
                 .Where(op => op.ProductId == productId)
                 .ToList();
 
             this._orderProductRepository.DeleteRange(orderProducts);
-            await this._orderProductRepository.SaveChangesAsync();
-            
 
-            this._ordersRepository.DeleteRange(orders);
-            await this._ordersRepository.SaveChangesAsync();
+            await this._orderProductRepository.SaveChangesAsync();
         }
     }
 }
