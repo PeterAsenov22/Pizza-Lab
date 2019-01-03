@@ -4,6 +4,7 @@ import { NgModule } from '@angular/core'
 import { RouterModule } from '@angular/router'
 
 import { sharedComponents } from '.'
+import { MDBBootstrapModule } from 'angular-bootstrap-md'
 
 @NgModule({
   declarations: [
@@ -12,7 +13,8 @@ import { sharedComponents } from '.'
   imports: [
     CommonModule,
     FontAwesomeModule,
-    RouterModule
+    RouterModule,
+    MDBBootstrapModule.forRoot()
   ],
   exports: [
     ...sharedComponents

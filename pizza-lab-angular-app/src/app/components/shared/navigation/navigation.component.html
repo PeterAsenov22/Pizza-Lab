@@ -17,14 +17,34 @@
       <li class="nav-item" *ngIf="authService.isAuthenticated() && !authService.isAdmin()">
         <a class="nav-link" routerLink="/cart">Cart</a>
       </li>
-      <li class="nav-item" *ngIf="authService.isAuthenticated() && authService.isAdmin()">
-        <a class="nav-link" routerLink="/admin/product/create">Create New Pizza</a>
+      <li class="nav-item dropdown" dropdown *ngIf="authService.isAuthenticated() && authService.isAdmin()">
+        <a dropdownToggle class="nav-link dropdown-toggle waves-light">
+        Products<span class="caret"></span></a>
+        <div *dropdownMenu class="dropdown-menu dropdown dropdown-primary" role="menu">
+            <a class="nav-link" routerLink="/admin/product/create">Create New Pizza</a>
+        </div>
       </li>
-      <li class="nav-item" *ngIf="authService.isAuthenticated() && authService.isAdmin()">
-        <a class="nav-link" routerLink="/admin/orders/pending">Pending Orders</a>
+      <li class="nav-item dropdown" dropdown *ngIf="authService.isAuthenticated() && authService.isAdmin()">
+        <a dropdownToggle class="nav-link dropdown-toggle waves-light">
+        Orders<span class="caret"></span></a>
+        <div *dropdownMenu class="dropdown-menu dropdown dropdown-primary" role="menu">
+          <a class="nav-link" routerLink="/admin/orders/pending">Pending</a>
+          <a class="nav-link" routerLink="/admin/orders/approved">Approved</a>
+        </div>
+      </li>         
+      <li class="nav-item dropdown" dropdown *ngIf="authService.isAuthenticated() && authService.isAdmin()">
+        <a dropdownToggle class="nav-link dropdown-toggle waves-light">
+        Categories<span class="caret"></span></a>
+        <div *dropdownMenu class="dropdown-menu dropdown dropdown-primary" role="menu">
+            <a class="nav-link" routerLink="/admin/categories/add">Add Category</a>
+        </div>
       </li>
-      <li class="nav-item" *ngIf="authService.isAuthenticated() && authService.isAdmin()">
-        <a class="nav-link" routerLink="/admin/orders/approved">Approved Orders</a>
+      <li class="nav-item dropdown" dropdown *ngIf="authService.isAuthenticated() && authService.isAdmin()">
+        <a dropdownToggle class="nav-link dropdown-toggle waves-light">
+        Ingredients<span class="caret"></span></a>
+        <div *dropdownMenu class="dropdown-menu dropdown dropdown-primary" role="menu">
+            <a class="nav-link" routerLink="/admin/ingredients/add">Add Ingredient</a>
+        </div>
       </li>
     </ul>
     <ul class="nav navbar-nav navbar-right">
