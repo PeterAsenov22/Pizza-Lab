@@ -25,6 +25,7 @@
         private readonly IReviewsService _reviewsService;
         private readonly IProductsIngredientsService _productsIngredientsService;
         private readonly IUsersLikesService _usersLikesService;
+        private readonly IOrdersService _ordersService;
 
         public ProductsController(
             IMapper mapper,
@@ -33,7 +34,8 @@
             IIngredientsService ingredientsService,
             IReviewsService reviewsService,
             IProductsIngredientsService productsIngredientsService,
-            IUsersLikesService usersLikesService)
+            IUsersLikesService usersLikesService,
+            IOrdersService ordersService)
         {
             this._mapper = mapper;
             this._productsService = productsService;
@@ -42,6 +44,7 @@
             this._reviewsService = reviewsService;
             this._productsIngredientsService = productsIngredientsService;
             this._usersLikesService = usersLikesService;
+            this._ordersService = ordersService;
         }
 
         [HttpPost]
@@ -98,7 +101,10 @@
 
                     try
                     {
-                        var createdProductDto = await this._productsService.CreateAsync(productDto);
+                        await this._productsService.CreateAsync(productDto);
+                        var createdProductDto = this._productsService
+                            .All()
+                            .First(p => p.Name == productDto.Name);
 
                         return new SuccessViewModel<ProductViewModel>
                         {
@@ -190,7 +196,10 @@
 
                     try
                     {
-                        var editedProductDto = await this._productsService.EditAsync(productDto);
+                        await this._productsService.EditAsync(productDto);
+                        var editedProductDto = this._productsService
+                            .All()
+                            .First(p => p.Name == productDto.Name);
 
                         return new SuccessViewModel<ProductViewModel>
                         {
@@ -221,7 +230,7 @@
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        public async Task<ActionResult<SuccessViewModel<ProductViewModel>>> Delete(string productId)
+        public async Task<ActionResult> Delete(string productId)
         {
             if (this.User.IsInRole("Administrator"))
             {
@@ -238,14 +247,15 @@
                     await this._usersLikesService.DeleteProductLikesAsync(productId);
                     await this._productsIngredientsService.DeleteProductIngredientsAsync(productId);
                     await this._reviewsService.DeleteProductReviewsAsync(productId);
-                    await this._productsService.DeleteAsync(productId);
+                    await this._ordersService.DeleteProductOrdersAsync(productId);
+                    await this._productsService.DeleteAsync(productId);                
 
                     return Ok(new
                     {
                         Message = "Product deleted successfully."
                     });
                 }
-                catch (Exception)
+                catch (Exception e)
                 {
                     return BadRequest(new BadRequestViewModel
                     {
