@@ -79,7 +79,7 @@ export class EditProductComponent extends BaseComponent implements OnInit {
         name: [this.product.name, [Validators.required, Validators.minLength(3), Validators.maxLength(20)]],
         category: [this.product.category],
         ingredients: this.fb.array(this.product.ingredients),
-        description: [this.product.description, [Validators.required, Validators.minLength(10), Validators.maxLength(200)]],
+        description: [this.product.description, [Validators.required, Validators.minLength(10), Validators.maxLength(220)]],
         image: [this.product.image, [
           Validators.required,
           Validators.minLength(14),

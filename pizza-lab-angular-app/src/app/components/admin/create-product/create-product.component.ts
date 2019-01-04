@@ -70,7 +70,7 @@ export class CreateProductComponent extends BaseComponent implements OnInit {
       name: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(20)]],
       category: [null],
       ingredients: this.fb.array([]),
-      description: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(200)]],
+      description: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(220)]],
       image: ['', [Validators.required, Validators.minLength(14), Validators.pattern('^(http|https):\/\/[a-zA-Z0-9]+.*$')]],
       weight: ['', [Validators.required, Validators.min(250), Validators.max(800)]],
       price: ['', [Validators.required, Validators.min(0.1)]]
