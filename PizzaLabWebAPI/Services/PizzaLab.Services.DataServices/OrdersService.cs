@@ -102,7 +102,7 @@
                 .Select(o => this._mapper.Map<OrderDto>(o));
         }
 
-        public async Task DeleteProductOrders(string productId)
+        public async Task DeleteProductOrdersAsync(string productId)
         {
             var orderProducts = this._orderProductRepository
                 .All()
