@@ -10,13 +10,13 @@
 
         bool Any();
 
-        Task<ProductDto> CreateAsync(ProductDto product);
+        Task CreateAsync(ProductDto product);
 
         Task CreateRangeAsync(IEnumerable<ProductDto> products);
 
         Task DeleteAsync(string productId);
 
-        Task<ProductDto> EditAsync(ProductDto product);
+        Task EditAsync(ProductDto product);
 
         bool Exists(string productId);
     }

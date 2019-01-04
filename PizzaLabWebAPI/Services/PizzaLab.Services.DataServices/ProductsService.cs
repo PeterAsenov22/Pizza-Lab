@@ -41,18 +41,13 @@
             return this._productsRepository.All().Any();
         }
 
-        public async Task<ProductDto> CreateAsync(ProductDto productDto)
+        public async Task CreateAsync(ProductDto productDto)
         {
             var product = this._mapper
                 .Map<Product>(productDto);
 
             await this._productsRepository.AddAsync(product);
             await this._productsRepository.SaveChangesAsync();
-
-            var createdProduct = this.All()
-                .First(p => p.Id == product.Id);
-
-            return this._mapper.Map<ProductDto>(createdProduct);
         }
 
         public async Task CreateRangeAsync(IEnumerable<ProductDto> productsDtos)
@@ -74,18 +69,13 @@
             await this._productsRepository.SaveChangesAsync();
         }
 
-        public async Task<ProductDto> EditAsync(ProductDto productDto)
+        public async Task EditAsync(ProductDto productDto)
         {
             var product = this._mapper
                 .Map<Product>(productDto);
 
             this._productsRepository.Update(product);
             await this._productsRepository.SaveChangesAsync();
-
-            var editedProduct = this.All()
-                .First(p => p.Id == product.Id);
-
-            return this._mapper.Map<ProductDto>(editedProduct);
         }
 
         public bool Exists(string productId)
