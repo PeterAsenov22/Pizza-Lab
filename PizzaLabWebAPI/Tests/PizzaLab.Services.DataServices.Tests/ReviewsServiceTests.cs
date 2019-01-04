@@ -80,5 +80,60 @@
             productReviews = _reviewsService.GetProductReviews("2345");
             Assert.Empty(productReviews);
         }
+
+        [Fact]
+        public async Task DeleteReviewAsyncShouldDeleteReviewSuccessfully()
+        {
+            await _reviewsService.CreateAsync("Very good pizza", "1234", "2345");
+            await _reviewsService.CreateAsync("Brilliant", "12345", "2345");
+
+            var reviewId = _reviewsRepository.All().First().Id;
+            await _reviewsService.DeleteReviewAsync(reviewId);
+
+            Assert.Equal(1, _reviewsRepository.All().Count());
+            Assert.Equal("Brilliant", _reviewsRepository.All().First().Text);
+        }
+
+        [Fact]
+        public async Task ExistsShouldReturnTrue()
+        {
+            await _reviewsService.CreateAsync("Very good pizza", "1234", "2345");
+            await _reviewsService.CreateAsync("Brilliant", "12345", "2345");
+
+            var firstReviewId = _reviewsRepository.All().First().Id;
+            var secondReviewId = _reviewsRepository.All().Last().Id;
+
+            Assert.True(_reviewsService.Exists(firstReviewId));
+            Assert.True(_reviewsService.Exists(secondReviewId));
+        }
+
+        [Fact]
+        public async Task ExistsShouldReturnFalse()
+        {
+            await _reviewsService.CreateAsync("Very good pizza", "1234", "2345");
+            await _reviewsService.CreateAsync("Brilliant", "12345", "2345");
+
+            Assert.False(_reviewsService.Exists("1234"));
+        }
+
+        [Fact]
+        public async Task FindReviewCreatorByIdShouldReturnCorrectReviewCreatorUsername()
+        {
+            var review = new Review
+            {
+                Id = "reviewId",
+                Creator = new ApplicationUser
+                {
+                    Id = "testId",
+                    UserName = "TestUsername"
+                },
+                ProductId = "1234"
+            };
+            await this._reviewsRepository.AddAsync(review);
+            await this._reviewsRepository.SaveChangesAsync();
+
+            var creatorUsername = _reviewsService.FindReviewCreatorById("reviewId");
+            Assert.Equal("TestUsername", creatorUsername);
+        }
     }
 }
