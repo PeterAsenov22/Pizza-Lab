@@ -4,8 +4,11 @@
 
     public class CreateReviewInputModel
     {
+        private const int ReviewMinimumLength = 4;
+        private const string ReviewErrorMessage = "Review Text should be at least 4 characters long.";
+
         [Required]
-        [MinLength(4, ErrorMessage = "Review Text should be at least 4 characters long.")]
+        [MinLength(ReviewMinimumLength, ErrorMessage = ReviewErrorMessage)]
         public string Review { get; set; }
     }
 }

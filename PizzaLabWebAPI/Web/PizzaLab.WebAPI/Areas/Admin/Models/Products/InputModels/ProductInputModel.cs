@@ -6,8 +6,25 @@
 
     public class ProductInputModel
     {
+        private const int NameMinimumLength = 3;
+        private const int NameMaximumLength = 20;
+        private const int DescriptionMinimumLength = 10;
+        private const int DescriptionMaximumLength = 220;
+        private const int ImageMinimumLength = 14;
+        private const int MinimumWeight = 250;
+        private const int MaximumWeight = 800;
+        private const double MinimumPrice = 0.1;
+        
+        private const string NameErrorMessage = "Name should be at least 3 characters long and not more than 20.";
+        private const string DescriptionErrorMessage = "Description should be at least 10 characters long and not more than 220.";
+        private const string ImageErrorMessage = "Image URL should be at least 14 characters long.";
+        private const string ImageRegex = @"^(http:|https:)\/\/.+";
+        private const string ImageRegexErrorMessage = "Image URL should be valid.";
+        private const string WeightErrorMessage = "Weight should be between 250 and 800 grams";
+        private const string PriceErrorMessage = "Price should be a positive number.";
+
         [Required]
-        [StringLength(20, MinimumLength = 3, ErrorMessage = "Name should be at least 3 characters long and not more than 20.")]
+        [StringLength(NameMaximumLength, MinimumLength = NameMinimumLength, ErrorMessage = NameErrorMessage)]
         public string Name { get; set; }
 
         [Required]
@@ -16,18 +33,18 @@
         public List<string> Ingredients { get; set; }
 
         [Required]
-        [StringLength(220, MinimumLength = 10, ErrorMessage = "Description should be at least 10 characters long and not more than 220.")]
+        [StringLength(DescriptionMaximumLength, MinimumLength = DescriptionMinimumLength, ErrorMessage = DescriptionErrorMessage)]
         public string Description { get; set; }
 
         [Required]
-        [MinLength(14, ErrorMessage = "Image URL should be at least 14 characters long.")]
-        [RegularExpression(@"^(http:|https:)\/\/.+", ErrorMessage = "Image URL should be valid.")]
+        [MinLength(ImageMinimumLength, ErrorMessage = ImageErrorMessage)]
+        [RegularExpression(ImageRegex, ErrorMessage = ImageRegexErrorMessage)]
         public string Image { get; set; }
 
-        [Range(250, 800, ErrorMessage = "Weight should be between 250 and 800 grams.")]
+        [Range(MinimumWeight, MaximumWeight, ErrorMessage = WeightErrorMessage)]
         public int Weight { get; set; }
 
-        [Range(0.1, Double.MaxValue, ErrorMessage = "Price should be a positive number.")]
+        [Range(MinimumPrice, Double.MaxValue, ErrorMessage = PriceErrorMessage)]
         public decimal Price { get; set; }
     }
 }

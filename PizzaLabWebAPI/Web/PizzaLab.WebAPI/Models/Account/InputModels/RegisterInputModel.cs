@@ -4,16 +4,22 @@
 
     public class RegisterInputModel
     {
-        private const int PasswordMinLength = 8;
-        private const int UsernameMinLength = 4;
+        private const int UsernameMinimumLength = 4;
+        private const int PasswordMinimumLength = 8;
+        
+        private const string EmailErrorMessage = "Please enter valid e-mail address.";
+        private const string UsernameRegex = "^[^@]*$";
+        private const string UsernameRegexErrorMessage = "Username should not contain @ symbol.";
+        private const string UsernameErrorMessage = "Username should be at least 4 symbols long.";
+        private const string PasswordErrorMessage = "Password should be at least 8 symbols long.";
 
         [Required]
-        [EmailAddress(ErrorMessage = "Please enter valid e-mail address.")]
+        [EmailAddress(ErrorMessage = EmailErrorMessage)]
         public string Email { get; set; }
 
         [Required]
-        [RegularExpression("^[^@]*$", ErrorMessage = "Username should not contain @ symbol.")]
-        [MinLength(UsernameMinLength, ErrorMessage = "Username should be at least 4 symbols long.")]
+        [RegularExpression(UsernameRegex, ErrorMessage = UsernameRegexErrorMessage)]
+        [MinLength(UsernameMinimumLength, ErrorMessage = UsernameErrorMessage)]
         public string Username { get; set; }
 
         public string FirstName { get; set; }
@@ -21,7 +27,7 @@
         public string LastName { get; set; }
 
         [Required]
-        [MinLength(PasswordMinLength, ErrorMessage = "Password should be at least 8 symbols long.")]
+        [MinLength(PasswordMinimumLength, ErrorMessage = PasswordErrorMessage)]
         public string Password { get; set; }
     }
 }
