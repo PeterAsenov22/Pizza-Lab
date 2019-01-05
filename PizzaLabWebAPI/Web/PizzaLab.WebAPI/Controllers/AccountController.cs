@@ -108,13 +108,17 @@
 
             if (result.Succeeded)
             {
-                await _signInManager.SignInAsync(user, false);
-
-                return new AuthenticationViewModel
+                var addToRoleResult = await _userManager.AddToRoleAsync(user, "User");
+                if (addToRoleResult.Succeeded)
                 {
-                    Message = "You have successfully registered.",
-                    Token = GenerateJwtToken(user)
-                };
+                    await _signInManager.SignInAsync(user, false);
+
+                    return new AuthenticationViewModel
+                    {
+                        Message = "You have successfully registered.",
+                        Token = GenerateJwtToken(user)
+                    };
+                }
             }
 
             return BadRequest(new BadRequestViewModel

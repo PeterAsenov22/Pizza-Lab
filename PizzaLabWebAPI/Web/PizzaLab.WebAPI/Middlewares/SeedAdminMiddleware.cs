@@ -34,6 +34,16 @@
                     }
                 }
 
+                var userRoleExists = roleManager.RoleExistsAsync("User").Result;
+                if (!userRoleExists)
+                {
+                    var result = roleManager.CreateAsync(new IdentityRole("User")).Result;
+                    if (!result.Succeeded)
+                    {
+                        throw new InvalidOperationException();
+                    }
+                }
+
                 var user = new ApplicationUser
                 {
                     Email = "admin@admin.com",
