@@ -1,4 +1,6 @@
-﻿namespace PizzaLab.WebAPI
+﻿using PizzaLab.WebAPI.Middlewares;
+
+namespace PizzaLab.WebAPI
 {
     using AutoMapper;
     using Data;
@@ -112,6 +114,15 @@
             }
 
             loggerFactory.AddContext(LogLevel.Error, app);
+
+            app.Use(async (ctx, next) =>
+            {
+                await next();
+                if (ctx.Response.StatusCode == 204)
+                {
+                    ctx.Response.ContentLength = 0;
+                }
+            });
 
             app.UseCors(x => x
                 .AllowAnyOrigin()
