@@ -1,6 +1,4 @@
-﻿using PizzaLab.WebAPI.Middlewares;
-
-namespace PizzaLab.WebAPI
+﻿namespace PizzaLab.WebAPI
 {
     using AutoMapper;
     using Data;
