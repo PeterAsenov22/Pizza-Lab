@@ -26,12 +26,12 @@ export class AuthenticationService {
     private toastr: ToastrService,
     private store: Store<AppState>,
     private router: Router) {
-    this.store.pipe(select(state => state.authentication.isAdmin))
-      .subscribe(data => this.isUserAdmin = data)
-    this.store.pipe(select(state => state.authentication.isAuthenticated))
-      .subscribe(data => this.isUserAuthenticated = data)
-    this.store.pipe(select(state => state.authentication.username))
-      .subscribe(data => this.username = data)
+    this.store.pipe(select(state => state.authentication))
+      .subscribe(authentication => {
+        this.isUserAdmin = authentication.isAdmin
+        this.isUserAuthenticated = authentication.isAuthenticated
+        this.username = authentication.username
+      })
 
     if (localStorage.getItem('authtoken')) {
       const authtoken = localStorage.getItem('authtoken')
