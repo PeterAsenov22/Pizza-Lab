@@ -1,6 +1,5 @@
-import { AuthService } from 'angularx-social-login'
+import { AuthService, FacebookLoginProvider } from 'angularx-social-login'
 import { Component } from '@angular/core'
-import { FacebookLoginProvider } from 'angularx-social-login'
 import { faWindowClose } from '@fortawesome/free-solid-svg-icons'
 import { FormBuilder, Validators } from '@angular/forms'
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap'

@@ -10,7 +10,7 @@ import { Authenticate, Deauthenticate } from '../../store/authentication/authent
 import AuthenticationDataModel from '../../models/AuthenticationDataModel'
 import { LoginModel } from '../../../components/authentication/models/LoginModel'
 import { RegisterModel } from '../../../components/authentication/models/RegisterModel'
-import { FacebookLoginModel } from 'src/app/components/authentication/models/FacebookLoginModel';
+import { FacebookLoginModel } from 'src/app/components/authentication/models/FacebookLoginModel'
 
 const loginUrl = 'https://localhost:44393/api/account/login'
 const facebookLoginUrl = 'https://localhost:44393/api/account/login/external/facebook'
