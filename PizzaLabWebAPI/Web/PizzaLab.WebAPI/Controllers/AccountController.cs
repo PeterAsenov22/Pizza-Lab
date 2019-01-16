@@ -167,13 +167,6 @@
             if (user is null)
             {
                 user = this._mapper.Map<ApplicationUser>(userInfo);
-                if (_userManager.Users.Any(u => u.Email == user.Email))
-                {
-                    return BadRequest(new BadRequestViewModel
-                    {
-                        Message = "This e-mail is already taken."
-                    });
-                }
 
                 var result = await _userManager.CreateAsync(user);
                 if (!result.Succeeded)
