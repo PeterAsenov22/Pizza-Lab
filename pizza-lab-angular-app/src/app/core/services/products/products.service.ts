@@ -8,17 +8,16 @@ import { ToastrService } from 'ngx-toastr'
 import { AppState } from '../../store/app.state'
 import { CreateProductModel } from '../../../components/admin/models/CreateProductModel'
 import { ProductModel } from '../../../components/products/models/ProductModel'
-
+import { environment } from 'src/environments/environment'
 import { GetAllProducts,
-  LikeProduct, UnlikeProduct, CreateProduct, DeleteProduct, EditProduct } from '../../store/products/products.actions'
+  LikeProduct, UnlikeProduct, DeleteProduct, EditProduct } from '../../store/products/products.actions'
 import { GetRequestBegin, GetRequestEnd } from '../../store/http/http.actions'
 import { ResponseDataModel } from '../../models/ResponseDataModel'
 
-const baseUrl = 'https://localhost:44393/api'
-const allProductsUrl = baseUrl + '/products/all'
-const likeProductUrl = baseUrl + '/products/like/'
-const unlikeProductUrl = baseUrl + '/products/unlike/'
-const adminProductsUrl = baseUrl + '/admin/products'
+const allProductsUrl = environment.apiBaseUrl + 'products/all'
+const likeProductUrl = environment.apiBaseUrl + 'products/like/'
+const unlikeProductUrl = environment.apiBaseUrl + 'products/unlike/'
+const adminProductsUrl = environment.apiBaseUrl + 'admin/products'
 const fiveMinutes = 1000 * 60 * 5
 
 @Injectable()
@@ -57,10 +56,6 @@ export class ProductsService {
     this.http
       .post(adminProductsUrl, model)
       .subscribe((res: ResponseDataModel) => {
-        const product: ProductModel = res.data
-        product.reviews = []
-
-        this.store.dispatch(new CreateProduct(product))
         this.spinner.hide()
         this.router.navigate(['/menu'])
         this.toastr.success(res.message)
