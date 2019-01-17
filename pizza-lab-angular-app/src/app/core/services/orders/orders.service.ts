@@ -6,18 +6,18 @@ import { ToastrService } from 'ngx-toastr'
 
 import { AppState } from '../../store/app.state'
 import { ClearCart } from '../../store/cart/cart.actions'
+import { environment } from 'src/environments/environment'
 import { GetUserOrders, SubmitOrder, GetPendingOrders, ApproveOrder, GetApprovedOrders } from '../../store/orders/orders.actions'
 import { OrderModel } from '../../../components/orders/models/OrderModel'
 import { OrderProductModel } from '../../../components/orders/models/OrderProductModel'
 import { NgxSpinnerService } from 'ngx-spinner'
 import { ResponseDataModel } from '../../models/ResponseDataModel'
 
-const baseUrl = 'https://localhost:44393/api/'
-const userOrdersUrl = 'orders/my'
-const submitOrderUrl = 'orders/submit'
-const approvedOrdersUrl = 'admin/orders/approved'
-const pendingOrdersUrl = 'admin/orders/pending'
-const approveOrderUrl = 'admin/orders/approve/'
+const userOrdersUrl = environment.apiBaseUrl + 'orders/my'
+const submitOrderUrl = environment.apiBaseUrl + 'orders/submit'
+const approvedOrdersUrl = environment.apiBaseUrl + 'admin/orders/approved'
+const pendingOrdersUrl = environment.apiBaseUrl + 'admin/orders/pending'
+const approveOrderUrl = environment.apiBaseUrl + 'admin/orders/approve/'
 
 @Injectable()
 export class OrdersService {
@@ -43,7 +43,7 @@ export class OrdersService {
 
     this.spinner.show()
 
-    this.http.get<OrderModel[]>(`${baseUrl}${userOrdersUrl}`)
+    this.http.get<OrderModel[]>(userOrdersUrl)
       .subscribe(orders => {
         this.store.dispatch(new GetUserOrders(orders))
         this.spinner.hide()
@@ -53,7 +53,7 @@ export class OrdersService {
   getPendingOrders() {
     this.spinner.show()
 
-    this.http.get<OrderModel[]>(`${baseUrl}${pendingOrdersUrl}`)
+    this.http.get<OrderModel[]>(pendingOrdersUrl)
       .subscribe(orders => {
         this.store.dispatch(new GetPendingOrders(orders))
         this.spinner.hide()
@@ -63,7 +63,7 @@ export class OrdersService {
   getApprovedOrders() {
     this.spinner.show()
 
-    this.http.get<OrderModel[]>(`${baseUrl}${approvedOrdersUrl}`)
+    this.http.get<OrderModel[]>(approvedOrdersUrl)
       .subscribe(orders => {
         this.store.dispatch(new GetApprovedOrders(orders))
         this.spinner.hide()
@@ -73,7 +73,7 @@ export class OrdersService {
   submitNewOrder(products: OrderProductModel[]) {
     this.spinner.show()
     this.http
-      .post(`${baseUrl}${submitOrderUrl}`, {orderProducts: products})
+      .post(submitOrderUrl, {orderProducts: products})
       .subscribe((res: ResponseDataModel) => {
         this.store.dispatch(new SubmitOrder(res.data))
         this.store.dispatch(new ClearCart())
@@ -86,7 +86,7 @@ export class OrdersService {
   approveOrder(id: string) {
     this.store.dispatch(new ApproveOrder(id))
     this.http
-      .post(`${baseUrl}${approveOrderUrl}${id}`, {})
+      .post(`${approveOrderUrl}${id}`, {})
       .subscribe()
   }
 }

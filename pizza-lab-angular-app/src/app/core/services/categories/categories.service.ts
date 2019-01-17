@@ -8,10 +8,11 @@ import { ToastrService } from 'ngx-toastr'
 import { AddCategory, GetAllCategories } from '../../../core/store/categories/categories.actions'
 import { AppState } from '../../store/app.state'
 import { CategoryModel } from '../../../components/admin/models/CategoryModel'
+import { environment } from 'src/environments/environment'
 import { ResponseDataModel } from '../../models/ResponseDataModel'
 
-const categoriesUrl = 'https://localhost:44393/api/categories'
-const categoriesAdminUrl = 'https://localhost:44393/api/admin/categories'
+const categoriesUrl = environment.apiBaseUrl + 'categories'
+const categoriesAdminUrl = environment.apiBaseUrl + 'admin/categories'
 const tenMinutes = 1000 * 60 * 10
 
 @Injectable()

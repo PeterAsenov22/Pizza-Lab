@@ -7,11 +7,12 @@ import { ToastrService } from 'ngx-toastr'
 
 import { AddIngredient, GetAllIngredients } from '../../../core/store/ingredients/ingredients.actions'
 import { AppState } from '../../store/app.state'
+import { environment } from 'src/environments/environment'
 import { IngredientModel } from '../../../components/admin/models/IngredientModel'
 import { ResponseDataModel } from '../../models/ResponseDataModel'
 
-const ingredientsUrl = 'https://localhost:44393/api/ingredients'
-const ingredientsAdminUrl = 'https://localhost:44393/api/admin/ingredients'
+const ingredientsUrl = environment.apiBaseUrl + 'ingredients'
+const ingredientsAdminUrl = environment.apiBaseUrl + 'admin/ingredients'
 const tenMinutes = 1000 * 60 * 10
 
 @Injectable()

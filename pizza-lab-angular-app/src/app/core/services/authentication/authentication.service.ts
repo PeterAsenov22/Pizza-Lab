@@ -8,13 +8,14 @@ import { Store, select } from '@ngrx/store'
 import { AppState } from '../../store/app.state'
 import { Authenticate, Deauthenticate } from '../../store/authentication/authentication.actions'
 import AuthenticationDataModel from '../../models/AuthenticationDataModel'
+import { environment } from 'src/environments/environment'
 import { LoginModel } from '../../../components/authentication/models/LoginModel'
 import { RegisterModel } from '../../../components/authentication/models/RegisterModel'
 import { FacebookLoginModel } from 'src/app/components/authentication/models/FacebookLoginModel'
 
-const loginUrl = 'https://localhost:44393/api/account/login'
-const facebookLoginUrl = 'https://localhost:44393/api/account/login/external/facebook'
-const registerUrl = 'https://localhost:44393/api/account/register'
+const loginUrl = environment.apiBaseUrl +  'account/login'
+const facebookLoginUrl = environment.apiBaseUrl + 'account/login/external/facebook'
+const registerUrl = environment.apiBaseUrl + 'account/register'
 
 @Injectable()
 export class AuthenticationService {

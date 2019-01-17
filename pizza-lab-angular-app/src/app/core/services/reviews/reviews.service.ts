@@ -6,10 +6,11 @@ import { ToastrService } from 'ngx-toastr'
 
 import { AddProductReview, GetProductReviews, DeleteProductReview } from '../../store/products/products.actions'
 import { AppState } from '../../store/app.state'
+import { environment } from 'src/environments/environment'
 import { ResponseDataModel } from '../../models/ResponseDataModel'
 import { ReviewModel } from '../../../components/products/models/ReviewModel'
 
-const baseUrl = 'https://localhost:44393/api/reviews'
+const baseUrl = environment.apiBaseUrl + 'reviews'
 
 @Injectable()
 export class ReviewsService {
