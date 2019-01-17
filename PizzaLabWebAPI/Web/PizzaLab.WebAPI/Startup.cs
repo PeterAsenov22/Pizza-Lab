@@ -6,6 +6,7 @@
     using Data.Models;
     using Helpers;
     using Helpers.Logging;
+    using Hubs;
     using Microsoft.AspNetCore.Authentication.JwtBearer;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
@@ -83,6 +84,7 @@
                 .AddDefaultTokenProviders();
 
             services.AddCors();
+            services.AddSignalR();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
             services.AddScoped(typeof(IRepository<>), typeof(EfRepository<>));
@@ -123,15 +125,20 @@
             });
 
             app.UseCors(x => x
-                .AllowAnyOrigin()
                 .AllowAnyMethod()
                 .AllowAnyHeader()
-                .AllowCredentials());
+                .AllowCredentials()
+                .WithOrigins("http://localhost:4200"));
 
             app.UseSeedAdminMiddleware();
             app.UseSeedCategoriesMiddleware();
             app.UseSeedIngredientsMiddleware();
             app.UseSeedProductsMiddleware();
+
+            app.UseSignalR(routes =>
+            {
+                routes.MapHub<ProductsHub>("/api/notify");
+            });
 
             app.UseHttpsRedirection();
             app.UseAuthentication(); 

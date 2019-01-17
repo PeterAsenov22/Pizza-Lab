@@ -1,8 +1,11 @@
 ﻿namespace PizzaLab.WebAPI.Areas.Admin.Controllers
 {
     using AutoMapper;
+    using Hubs;
+    using Hubs.Contracts;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
+    using Microsoft.AspNetCore.SignalR;
     using Models.Products.InputModels;
     using Services.DataServices.Contracts;
     using Services.DataServices.Models.Ingredients;
@@ -26,6 +29,7 @@
         private readonly IProductsIngredientsService _productsIngredientsService;
         private readonly IUsersLikesService _usersLikesService;
         private readonly IOrdersService _ordersService;
+        private readonly IHubContext<ProductsHub, IProductsHubClient> _productsHubContext;
 
         public ProductsController(
             IMapper mapper,
@@ -35,7 +39,8 @@
             IReviewsService reviewsService,
             IProductsIngredientsService productsIngredientsService,
             IUsersLikesService usersLikesService,
-            IOrdersService ordersService)
+            IOrdersService ordersService,
+            IHubContext<ProductsHub, IProductsHubClient> productHubContext)
         {
             this._mapper = mapper;
             this._productsService = productsService;
@@ -45,6 +50,7 @@
             this._productsIngredientsService = productsIngredientsService;
             this._usersLikesService = usersLikesService;
             this._ordersService = ordersService;
+            this._productsHubContext = productHubContext;
         }
 
         [HttpPost]
@@ -52,7 +58,7 @@
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        public async Task<ActionResult<SuccessViewModel<ProductViewModel>>> Post([FromBody] ProductInputModel model)
+        public async Task<ActionResult> Post([FromBody] ProductInputModel model)
         {
             if (this.User.IsInRole("Administrator"))
             {
@@ -106,11 +112,13 @@
                             .All()
                             .First(p => p.Name == productDto.Name);
 
-                        return new SuccessViewModel<ProductViewModel>
-                        {
-                            Data = this._mapper.Map<ProductViewModel>(createdProductDto),
+                        var createdProductViewModel = this._mapper.Map<ProductViewModel>(createdProductDto);
+
+                        await this._productsHubContext.Clients.All.BroadcastProduct(createdProductViewModel);
+
+                        return Ok(new {
                             Message = "Product added successfully."
-                        };
+                        });
                     }
                     catch (Exception)
                     {
