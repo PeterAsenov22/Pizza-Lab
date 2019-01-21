@@ -46,6 +46,8 @@ export class AuthenticationService {
 
           const authData = new AuthenticationDataModel(authtoken, decoded.unique_name, isAdmin, true)
           this.store.dispatch(new Authenticate(authData))
+        } else {
+          this.toastr.error('Invalid token', 'Warning!')
         }
       } catch (err) {
         this.toastr.error('Invalid token', 'Warning!')
